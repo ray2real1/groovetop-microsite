@@ -1,6 +1,7 @@
 "use client";
 
 import { motion, useReducedMotion } from "framer-motion";
+import { EASE, STAGGER_STEP } from "@/lib/motion";
 
 const PALETTE = [
   {
@@ -65,7 +66,7 @@ export default function VisualDirection() {
             initial={shouldReduce ? false : { opacity: 0, y: 24 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-80px" }}
-            transition={{ duration: 0.65, ease: "easeOut" }}
+            transition={{ duration: 0.65, ease: EASE }}
             className="space-y-6"
           >
             <p className="text-[10px] font-bold tracking-[0.2em] uppercase text-groovetop-terracotta">
@@ -100,7 +101,7 @@ export default function VisualDirection() {
             initial={shouldReduce ? false : { opacity: 0, y: 24 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-80px" }}
-            transition={{ duration: 0.65, delay: 0.15, ease: "easeOut" }}
+            transition={{ duration: 0.65, delay: 0.15, ease: EASE }}
             className="grid grid-cols-2 sm:grid-cols-3 gap-4"
             role="list"
             aria-label="Groovetop color palette"
@@ -112,7 +113,7 @@ export default function VisualDirection() {
                 initial={shouldReduce ? false : { opacity: 0, scale: 0.96 }}
                 whileInView={{ opacity: 1, scale: 1 }}
                 viewport={{ once: true }}
-                transition={{ duration: 0.4, delay: i * 0.07 }}
+                transition={{ duration: 0.4, delay: i * STAGGER_STEP, ease: EASE }}
                 whileHover={shouldReduce ? {} : { y: -3 }}
                 className="rounded-2xl overflow-hidden border border-groovetop-navy/8 shadow-sm"
               >

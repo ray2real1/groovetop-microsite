@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import { motion, useReducedMotion } from "framer-motion";
+import { EASE } from "@/lib/motion";
 
 const CHIPS = [
   "WGU UX Project",
@@ -20,7 +21,7 @@ export default function Hero() {
       : {
           initial: { opacity: 0, y: 24 },
           animate: { opacity: 1, y: 0 },
-          transition: { duration: 0.7, delay, ease: [0.16, 1, 0.3, 1] },
+          transition: { duration: 0.7, delay, ease: EASE },
         };
 
   return (
@@ -124,12 +125,24 @@ export default function Hero() {
             aria-label="Three Groovetop app screens: Browse Pets, Pet Profile, and Saved Pets"
             className="relative flex items-center justify-center h-[520px] lg:h-[620px]"
           >
+            {/* Ambient depth — faint backlight + soft grounding shadow to anchor the cluster */}
+            <div aria-hidden="true" className="absolute inset-0 pointer-events-none">
+              <div
+                className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[300px] h-[300px] rounded-full blur-3xl"
+                style={{ background: "radial-gradient(circle, rgba(99,143,237,0.10) 0%, transparent 70%)" }}
+              />
+              <div
+                className="absolute left-1/2 -translate-x-1/2 bottom-6 w-[260px] h-9 rounded-[50%] blur-2xl"
+                style={{ background: "rgba(0,0,0,0.4)" }}
+              />
+            </div>
+
             {/* Behind-left: Browse Pets */}
             <motion.div
               className="absolute left-0 top-8 lg:top-12 z-0"
               initial={shouldReduce ? false : { opacity: 0, y: 30, rotate: -6 }}
               animate={{ opacity: 0.7, y: 0, rotate: -6 }}
-              transition={{ duration: 0.7, delay: 0.5, ease: [0.16, 1, 0.3, 1] }}
+              transition={{ duration: 0.7, delay: 0.5, ease: EASE }}
             >
               <div className="relative w-[180px] h-[320px] lg:w-[200px] lg:h-[360px] rounded-[2.5rem] overflow-hidden shadow-2xl border border-white/10">
                 <Image
@@ -147,7 +160,7 @@ export default function Hero() {
               className="relative z-20"
               initial={shouldReduce ? false : { opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.7, delay: 0.35, ease: [0.16, 1, 0.3, 1] }}
+              transition={{ duration: 0.7, delay: 0.35, ease: EASE }}
             >
               <div className="relative w-[220px] h-[400px] lg:w-[250px] lg:h-[460px] rounded-[2.5rem] overflow-hidden shadow-2xl border border-white/20">
                 <Image
@@ -166,7 +179,7 @@ export default function Hero() {
               className="absolute right-0 top-8 lg:top-12 z-0"
               initial={shouldReduce ? false : { opacity: 0, y: 30, rotate: 6 }}
               animate={{ opacity: 0.7, y: 0, rotate: 6 }}
-              transition={{ duration: 0.7, delay: 0.5, ease: [0.16, 1, 0.3, 1] }}
+              transition={{ duration: 0.7, delay: 0.5, ease: EASE }}
             >
               <div className="relative w-[180px] h-[320px] lg:w-[200px] lg:h-[360px] rounded-[2.5rem] overflow-hidden shadow-2xl border border-white/10">
                 <Image

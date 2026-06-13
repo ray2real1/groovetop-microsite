@@ -1,30 +1,51 @@
 "use client";
 
 import { motion, useReducedMotion } from "framer-motion";
+import { EASE } from "@/lib/motion";
 
 function StatItem({ number, label, suffix }: { number: string; label: string; suffix?: string }) {
   return (
-    <div className="flex flex-col gap-1">
+    <div className="flex flex-col gap-1.5">
       <div className="flex items-baseline gap-1">
-        <span className="text-[clamp(2.5rem,4vw,3.5rem)] font-extrabold tracking-tight text-groovetop-navy leading-none">
+        <span className="text-[clamp(2.25rem,3.6vw,3.25rem)] font-extrabold tracking-tight text-groovetop-navy leading-none tabular-nums">
           {number}
         </span>
         {suffix && (
-          <span className="text-lg font-bold text-groovetop-navy/40">{suffix}</span>
+          <span className="text-base font-bold text-groovetop-navy/40 tabular-nums">{suffix}</span>
         )}
       </div>
-      <span className="text-xs font-semibold tracking-wide text-groovetop-navy/50 uppercase">
+      <span className="text-[11px] font-semibold tracking-[0.08em] text-groovetop-navy/50 uppercase">
         {label}
       </span>
     </div>
   );
 }
 
-function Divider() {
-  return (
-    <div className="hidden lg:block w-px h-12 bg-groovetop-navy/10 self-center" aria-hidden="true" />
-  );
+/* Hairline matrix — vertical + horizontal strokes at 8% navy, desktop only.
+   Anchors the numbers to a regular rhythm without boxing them in. */
+function cellRules(index: number, cols: number): string {
+  const isLeftEdge = index % cols === 0;
+  const isTopRow = index < cols;
+  return [
+    !isLeftEdge ? "lg:border-l lg:border-groovetop-navy/[0.08]" : "",
+    !isTopRow ? "lg:border-t lg:border-groovetop-navy/[0.08]" : "",
+  ].join(" ");
 }
+
+const CLUSTER_A = [
+  { number: "68", label: "Design Tokens" },
+  { number: "10", label: "Text Styles" },
+  { number: "25", suffix: "/28", label: "Semantic Tokens Active" },
+];
+
+const CLUSTER_B = [
+  { number: "5",   label: "Component Sets" },
+  { number: "23",  label: "Variants" },
+  { number: "9",   label: "Editable Properties" },
+  { number: "452", label: "Color Bindings" },
+  { number: "63",  label: "Style Apps" },
+  { number: "6",   label: "Connected Screens" },
+];
 
 export default function StatsStrip() {
   const shouldReduce = useReducedMotion();
@@ -37,24 +58,24 @@ export default function StatsStrip() {
       <h2 id="stats-heading" className="sr-only">Design system metrics</h2>
 
       <div className="max-w-content mx-auto px-6 lg:px-10">
-        <div className="grid lg:grid-cols-2 gap-12 lg:gap-24">
+        <div className="grid lg:grid-cols-[minmax(0,3fr)_minmax(0,5fr)] gap-12 lg:gap-20">
 
           {/* Cluster A — System Foundation */}
           <motion.div
             initial={shouldReduce ? false : { opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-80px" }}
-            transition={{ duration: 0.6, ease: "easeOut" }}
+            transition={{ duration: 0.6, ease: EASE }}
           >
             <p className="text-[10px] font-bold tracking-[0.2em] uppercase text-groovetop-terracotta mb-6">
               System Foundation
             </p>
-            <div className="flex flex-wrap items-start gap-x-10 gap-y-8">
-              <StatItem number="68" label="Design Tokens" />
-              <Divider />
-              <StatItem number="10" label="Text Styles" />
-              <Divider />
-              <StatItem number="25" suffix="/28" label="Semantic Tokens Active" />
+            <div className="grid grid-cols-3">
+              {CLUSTER_A.map((stat, i) => (
+                <div key={stat.label} className={`py-1 lg:px-5 lg:first:pl-0 ${cellRules(i, 3)}`}>
+                  <StatItem {...stat} />
+                </div>
+              ))}
             </div>
           </motion.div>
 
@@ -63,23 +84,17 @@ export default function StatsStrip() {
             initial={shouldReduce ? false : { opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-80px" }}
-            transition={{ duration: 0.6, delay: 0.15, ease: "easeOut" }}
+            transition={{ duration: 0.6, delay: 0.12, ease: EASE }}
           >
             <p className="text-[10px] font-bold tracking-[0.2em] uppercase text-groovetop-terracotta mb-6">
               Reuse &amp; Application
             </p>
-            <div className="flex flex-wrap items-start gap-x-10 gap-y-8">
-              <StatItem number="5"   label="Component Sets" />
-              <Divider />
-              <StatItem number="23"  label="Variants" />
-              <Divider />
-              <StatItem number="9"   label="Editable Properties" />
-              <Divider />
-              <StatItem number="452" label="Color Bindings" />
-              <Divider />
-              <StatItem number="63"  label="Style Apps" />
-              <Divider />
-              <StatItem number="6"   label="Connected Screens" />
+            <div className="grid grid-cols-2 lg:grid-cols-3 gap-y-8 lg:gap-y-0">
+              {CLUSTER_B.map((stat, i) => (
+                <div key={stat.label} className={`py-1 lg:px-5 lg:py-5 ${cellRules(i, 3)}`}>
+                  <StatItem {...stat} />
+                </div>
+              ))}
             </div>
           </motion.div>
         </div>
@@ -89,7 +104,7 @@ export default function StatsStrip() {
           initial={shouldReduce ? false : { opacity: 0 }}
           whileInView={{ opacity: 1 }}
           viewport={{ once: true, margin: "-60px" }}
-          transition={{ duration: 0.7, delay: 0.3 }}
+          transition={{ duration: 0.7, delay: 0.25, ease: EASE }}
           className="mt-16 pt-10 border-t border-groovetop-navy/10 text-center"
         >
           <p className="text-xl lg:text-2xl font-semibold italic text-groovetop-navy/70 max-w-2xl mx-auto leading-snug text-balance">

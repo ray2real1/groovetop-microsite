@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import { motion, useReducedMotion } from "framer-motion";
+import { EASE } from "@/lib/motion";
 
 export default function AwardOutcome() {
   const shouldReduce = useReducedMotion();
@@ -18,7 +19,7 @@ export default function AwardOutcome() {
           initial={shouldReduce ? false : { opacity: 0, y: 16 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.5 }}
+          transition={{ duration: 0.5, ease: EASE }}
           className="text-[10px] font-bold tracking-[0.2em] uppercase text-groovetop-terracotta mb-10"
         >
           WGU Excellence Award Outcome
@@ -31,7 +32,7 @@ export default function AwardOutcome() {
             initial={shouldReduce ? false : { opacity: 0, y: 24 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.65, ease: "easeOut" }}
+            transition={{ duration: 0.65, ease: EASE }}
             className="space-y-8"
           >
             <h2
@@ -74,7 +75,7 @@ export default function AwardOutcome() {
             initial={shouldReduce ? false : { opacity: 0, scale: 0.98, y: 16 }}
             whileInView={{ opacity: 1, scale: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.7, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
+            transition={{ duration: 0.7, delay: 0.2, ease: EASE }}
           >
             <div className="rounded-2xl border border-groovetop-navy/10 bg-white overflow-hidden shadow-md">
               {/* Certificate image — landscape 2400×1854px */}

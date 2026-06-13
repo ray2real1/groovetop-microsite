@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { motion, useReducedMotion } from "framer-motion";
+import { EASE } from "@/lib/motion";
 
 const NAV_LINKS = [
   { label: "Overview",       href: "#overview"       },
@@ -74,7 +75,7 @@ export default function Nav() {
       }`}
       initial={shouldReduce ? false : { y: -80, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
-      transition={{ duration: 0.5, ease: "easeOut" }}
+      transition={{ duration: 0.5, ease: EASE }}
     >
       <div className="max-w-content mx-auto px-6 lg:px-10 h-[72px] flex items-center justify-between">
         <span

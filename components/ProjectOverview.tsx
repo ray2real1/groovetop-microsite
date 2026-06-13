@@ -1,6 +1,7 @@
 "use client";
 
 import { motion, useReducedMotion } from "framer-motion";
+import { EASE } from "@/lib/motion";
 
 const META = [
   { label: "Role",    value: "UX Designer · Visual Designer · Design System Creator" },
@@ -28,7 +29,7 @@ export default function ProjectOverview() {
             initial={shouldReduce ? false : { opacity: 0, y: 24 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-80px" }}
-            transition={{ duration: 0.65, ease: "easeOut" }}
+            transition={{ duration: 0.65, ease: EASE }}
             className="space-y-6"
           >
             <p className="text-[10px] font-bold tracking-[0.2em] uppercase text-groovetop-terracotta">
@@ -46,6 +47,9 @@ export default function ProjectOverview() {
             <p className="text-sm text-groovetop-navy/65 leading-relaxed max-w-xl">
               The design system was extracted directly from the existing prototype screens. No new visual language was introduced — only structure, repeatability, and handoff clarity.
             </p>
+            <p className="text-base font-medium text-groovetop-navy/80 leading-relaxed max-w-xl border-l-2 border-groovetop-terracotta/40 pl-5">
+              Worth a recruiter&rsquo;s attention because it shows the move from attractive screens to a documented, reusable system — without overstating the original academic scope.
+            </p>
           </motion.div>
 
           {/* Right — metadata card */}
@@ -53,7 +57,7 @@ export default function ProjectOverview() {
             initial={shouldReduce ? false : { opacity: 0, y: 24 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-80px" }}
-            transition={{ duration: 0.65, delay: 0.15, ease: "easeOut" }}
+            transition={{ duration: 0.65, delay: 0.15, ease: EASE }}
           >
             <div className="rounded-2xl border border-groovetop-navy/8 bg-groovetop-oat overflow-hidden">
               <div className="px-6 py-5 border-b border-groovetop-navy/8">

@@ -1,6 +1,7 @@
 "use client";
 
 import { motion, useReducedMotion } from "framer-motion";
+import { EASE, STAGGER_STEP } from "@/lib/motion";
 
 const CONSIDERATIONS = [
   {
@@ -71,7 +72,7 @@ export default function AccessibilityNotes() {
           initial={shouldReduce ? false : { opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.55 }}
+          transition={{ duration: 0.55, ease: EASE }}
           className="mb-10"
         >
           <p className="text-[10px] font-bold tracking-[0.2em] uppercase text-groovetop-terracotta mb-4">
@@ -99,8 +100,8 @@ export default function AccessibilityNotes() {
                 initial={shouldReduce ? false : { opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: "-40px" }}
-                transition={{ duration: 0.5, delay: (i % 4) * 0.07, ease: "easeOut" }}
-                className="rounded-xl border border-groovetop-navy/8 bg-groovetop-oat p-5 space-y-3"
+                transition={{ duration: 0.5, delay: (i % 4) * STAGGER_STEP, ease: EASE }}
+                className="rounded-2xl border border-groovetop-navy/8 bg-groovetop-oat p-6 lg:p-8 space-y-3.5"
               >
                 <div className="flex items-start justify-between gap-2">
                   <div className={`w-2 h-2 rounded-full mt-1 flex-shrink-0 ${style.dot}`} aria-hidden="true" />

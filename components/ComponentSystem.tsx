@@ -1,6 +1,7 @@
 "use client";
 
 import { motion, useReducedMotion } from "framer-motion";
+import { EASE, STAGGER_STEP } from "@/lib/motion";
 
 const COMPONENTS = [
   {
@@ -122,20 +123,20 @@ export default function ComponentSystem() {
           initial={shouldReduce ? false : { opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.55 }}
+          transition={{ duration: 0.55, ease: EASE }}
           className="mb-12"
         >
           <p className="text-[10px] font-bold tracking-[0.2em] uppercase text-groovetop-terracotta mb-4">
             Component System Structure
           </p>
-          <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-4">
+          <div className="flex flex-col lg:flex-row lg:items-start lg:justify-between gap-4">
             <h2
               id="components-heading"
-              className="text-[clamp(1.75rem,3vw,2.5rem)] font-extrabold tracking-tight text-groovetop-navy"
+              className="text-[clamp(1.75rem,3vw,2.5rem)] font-extrabold tracking-tight text-groovetop-navy leading-[1.1]"
             >
               5 component sets.<br />23 variants. 9 editable properties.
             </h2>
-            <p className="text-sm text-groovetop-navy/65 max-w-xs leading-relaxed">
+            <p className="text-sm text-groovetop-navy/65 max-w-xs leading-relaxed lg:pt-1.5 lg:text-right">
               Built as real Figma component sets. Source sets are preserved in the DS v1 file and available from the Assets panel for direct reuse.
             </p>
           </div>
@@ -148,7 +149,7 @@ export default function ComponentSystem() {
               initial={shouldReduce ? false : { opacity: 0, y: 28 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-60px" }}
-              transition={{ duration: 0.55, delay: (i % 3) * 0.08, ease: "easeOut" }}
+              transition={{ duration: 0.55, delay: (i % 3) * STAGGER_STEP, ease: EASE }}
               whileHover={shouldReduce ? {} : { y: -3 }}
               aria-labelledby={`comp-title-${i}`}
               className="rounded-2xl border border-groovetop-navy/8 bg-groovetop-oat overflow-hidden"
@@ -193,6 +194,22 @@ export default function ComponentSystem() {
             </motion.article>
           ))}
         </div>
+
+        {/* System rule — component boundary rationale */}
+        <motion.div
+          initial={shouldReduce ? false : { opacity: 0, y: 16 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-60px" }}
+          transition={{ duration: 0.55, delay: 0.1, ease: EASE }}
+          className="mt-8 flex items-start gap-4 rounded-2xl border border-groovetop-navy/8 bg-groovetop-oat p-6 lg:p-7"
+        >
+          <span className="mt-0.5 flex-shrink-0 text-[10px] font-bold tracking-[0.15em] uppercase text-groovetop-terracotta">
+            System Rule
+          </span>
+          <p className="text-sm text-groovetop-navy/65 leading-relaxed max-w-3xl">
+            Button, Badge, Search Bar, Pet Card, and Bottom Nav are standardized through reusable component properties. Viewport layout containers stay local where needed to preserve spacing fidelity — reuse is applied where it compounds, not forced where it would add system complexity without payoff.
+          </p>
+        </motion.div>
       </div>
     </section>
   );

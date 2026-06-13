@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import { motion, useReducedMotion } from "framer-motion";
+import { EASE, STAGGER_STEP } from "@/lib/motion";
 
 const SCREENS = [
   {
@@ -10,8 +11,8 @@ const SCREENS = [
     src:   "/assets/groovetop/screens/browse-pets.png",
     alt:   "Browse Pets screen showing Groovetop search, filters, pet cards, and bottom navigation.",
     purpose: "Entry point for discovery — users scan available dogs at a glance.",
-    uxDecision: "Card-based list keeps cognitive load low; status badges surface availability immediately.",
-    systemNote: "Pet Card, Badge, and Search Bar components active. Bottom Nav shows Browse as the active state.",
+    uxDecision: "Led with a scannable card list over a dense table so availability reads in a single pass, not a sequence of taps.",
+    systemNote: "Pet Card, Badge, and Search Bar components render here; Bottom Nav holds Browse as the active state.",
   },
   {
     number: "02",
@@ -19,8 +20,8 @@ const SCREENS = [
     src:   "/assets/groovetop/screens/pet-profile.png",
     alt:   "Pet Profile screen for Biscuit with availability, shelter details, adoption fee, and visit CTA.",
     purpose: "Full detail view — name, breed, age, characteristics, and primary CTA.",
-    uxDecision: "Hero image dominates; CTA stays persistent at the bottom to reduce decision friction.",
-    systemNote: "color.cta.primary drives the Adopt CTA. Typography hierarchy uses 3 of 10 defined text styles.",
+    uxDecision: "Prioritized pet details and shelter context above the visit CTA to reduce decision friction before asking for commitment.",
+    systemNote: "Uses color.cta.primary, color.surface.card, and status-badge semantics to hold hierarchy and action clarity.",
   },
   {
     number: "03",
@@ -28,8 +29,8 @@ const SCREENS = [
     src:   "/assets/groovetop/screens/schedule-visit.png",
     alt:   "Schedule Visit screen showing calendar selection and available visit times.",
     purpose: "Time-slot selection before committing to an adoption visit.",
-    uxDecision: "Available and unavailable slots are visually differentiated — no ambiguity in the booking state.",
-    systemNote: "color.status.success-bg (available) and terracotta tones (unavailable) applied from semantic tokens.",
+    uxDecision: "Differentiated available from unavailable slots visually so the booking state is never ambiguous at a glance.",
+    systemNote: "color.status.available and terracotta unavailable tones are pulled from semantic tokens, not one-off fills.",
   },
   {
     number: "04",
@@ -37,8 +38,8 @@ const SCREENS = [
     src:   "/assets/groovetop/screens/confirmation.png",
     alt:   "Visit Confirmation screen showing confirmed visit details for Biscuit.",
     purpose: "Positive reinforcement — visit booked, next steps surfaced.",
-    uxDecision: "Single-screen success state reduces doubt; clear next-step actions prevent dead ends.",
-    systemNote: "color.brand.primary drives the confirmation icon. Button component used for both next-step actions.",
+    uxDecision: "Closed the loop with a single, unambiguous success state and explicit next steps so the flow never dead-ends.",
+    systemNote: "color.brand.primary drives the confirmation marker; the Button component handles both next-step actions.",
   },
   {
     number: "05",
@@ -46,8 +47,8 @@ const SCREENS = [
     src:   "/assets/groovetop/screens/preferences.png",
     alt:   "Preferences screen showing pet type, age range, living situation, and adoption notes.",
     purpose: "User-controlled filtering — breed, size, energy level, and more.",
-    uxDecision: "Chip-based selection keeps options scannable; grid layout aligns with the spacing system.",
-    systemNote: "Interactive background tokens applied to chip selections. Grid layout aligns with the overall spacing system.",
+    uxDecision: "Chose chip-based selection over nested menus so criteria stay scannable, reversible, and low-commitment.",
+    systemNote: "Interactive background tokens style chip selection; the grid follows the shared spacing scale.",
   },
   {
     number: "06",
@@ -55,8 +56,8 @@ const SCREENS = [
     src:   "/assets/groovetop/screens/saved-pets.png",
     alt:   "Saved Pets screen showing Biscuit saved as a favorite pet.",
     purpose: "Saved dog list — lets users return to bookmarked pets and continue their decision at any time.",
-    uxDecision: "Saved is always one tap away via Bottom Nav. Returning to this screen keeps the browsing loop low-friction.",
-    systemNote: "Pet Card Saved variant used throughout. Bottom Nav highlights Saved as the active state.",
+    uxDecision: "Kept Saved one tap away in the Bottom Nav so users can park a decision and return without losing context.",
+    systemNote: "Pet Card 'Saved' variant is reused throughout; Bottom Nav holds Saved as the active state.",
   },
 ];
 
@@ -68,17 +69,17 @@ function ScreenCard({ screen, index }: { screen: typeof SCREENS[0]; index: numbe
       initial={shouldReduce ? false : { opacity: 0, y: 32 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-60px" }}
-      transition={{ duration: 0.6, delay: (index % 3) * 0.1, ease: "easeOut" }}
+      transition={{ duration: 0.6, delay: (index % 3) * STAGGER_STEP, ease: EASE }}
       aria-labelledby={`screen-title-${index}`}
-      className="group flex flex-col rounded-2xl overflow-hidden bg-white border border-groovetop-navy/8 hover:shadow-lg hover:-translate-y-1 transition-all duration-300"
+      className="group flex flex-col rounded-2xl overflow-hidden bg-white border border-groovetop-navy/8 hover:shadow-xl hover:shadow-groovetop-navy/5 hover:border-groovetop-navy/12 hover:-translate-y-1 transition-all duration-300"
     >
       {/* Real screen image */}
-      <div className="relative w-full bg-[#FAF7F1]" style={{ aspectRatio: "390/620" }}>
+      <div className="relative w-full bg-[#FAF7F1] overflow-hidden" style={{ aspectRatio: "390/620" }}>
         <Image
           src={screen.src}
           alt={screen.alt}
           fill
-          className="object-contain object-top"
+          className="object-contain object-top transition-transform duration-500 ease-out group-hover:scale-[1.02]"
           sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
         />
         {/* Screen number chip */}
@@ -111,7 +112,7 @@ function ScreenCard({ screen, index }: { screen: typeof SCREENS[0]; index: numbe
           </div>
           <div className="p-3 rounded-xl bg-groovetop-oat border border-groovetop-navy/6">
             <p className="text-[9px] font-bold tracking-[0.15em] uppercase text-groovetop-terracotta mb-1">
-              Design System
+              Design System Implementation
             </p>
             <p className="text-xs text-groovetop-navy/55 leading-relaxed">{screen.systemNote}</p>
           </div>
@@ -135,7 +136,7 @@ export default function ScreenGallery() {
           initial={{ opacity: 0, y: 16 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.5 }}
+          transition={{ duration: 0.5, ease: EASE }}
         >
           <div>
             <p className="text-[10px] font-bold tracking-[0.2em] uppercase text-groovetop-terracotta mb-3">

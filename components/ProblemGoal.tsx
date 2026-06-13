@@ -1,6 +1,7 @@
 "use client";
 
 import { motion, useReducedMotion } from "framer-motion";
+import { EASE } from "@/lib/motion";
 
 export default function ProblemGoal() {
   const shouldReduce = useReducedMotion();
@@ -15,7 +16,7 @@ export default function ProblemGoal() {
           initial={shouldReduce ? false : { opacity: 0, y: 16 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-80px" }}
-          transition={{ duration: 0.5 }}
+          transition={{ duration: 0.5, ease: EASE }}
           className="text-[10px] font-bold tracking-[0.2em] uppercase text-groovetop-terracotta mb-10"
         >
           Problem + Goal
@@ -27,7 +28,7 @@ export default function ProblemGoal() {
             initial={shouldReduce ? false : { opacity: 0, y: 28 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-80px" }}
-            transition={{ duration: 0.65, ease: "easeOut" }}
+            transition={{ duration: 0.65, ease: EASE }}
             aria-labelledby="problem-heading"
             className="rounded-2xl bg-groovetop-navy p-8 lg:p-10 space-y-4"
           >
@@ -52,7 +53,7 @@ export default function ProblemGoal() {
             initial={shouldReduce ? false : { opacity: 0, y: 28 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-80px" }}
-            transition={{ duration: 0.65, delay: 0.12, ease: "easeOut" }}
+            transition={{ duration: 0.65, delay: 0.12, ease: EASE }}
             aria-labelledby="goal-heading"
             className="rounded-2xl bg-white border border-groovetop-navy/8 p-8 lg:p-10 space-y-4"
           >

@@ -19,6 +19,37 @@ html {
   html {
     scroll-behavior: auto;
   }
+  /* Safety net: neutralize any non-essential animation/transition for users
+     who opt out, beyond the per-component framer-motion guards. */
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Skip link — hidden until focused, then anchored top-left for keyboard users */
+.skip-link {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 100;
+  margin: 12px;
+  padding: 10px 18px;
+  border-radius: 9999px;
+  background-color: var(--navy);
+  color: var(--white);
+  font-size: 0.8125rem;
+  font-weight: 700;
+  transform: translateY(-160%);
+  transition: transform 0.2s ease;
+}
+
+.skip-link:focus {
+  transform: translateY(0);
 }
 
 *,

@@ -1,6 +1,7 @@
 "use client";
 
 import { motion, useReducedMotion } from "framer-motion";
+import { EASE } from "@/lib/motion";
 
 const SKILLS = [
   "Mobile UX Design",
@@ -8,6 +9,20 @@ const SKILLS = [
   "Figma Systems Thinking",
   "Component System Structure",
   "Academic-to-Portfolio Refinement",
+];
+
+const PROVES = [
+  "Mobile UX judgment",
+  "Visual design discipline",
+  "Figma systems thinking",
+  "Token + component structure",
+  "Refining academic work into a portfolio-grade artifact",
+];
+
+const NOT_PROVES = [
+  "Live product adoption",
+  "Production user metrics",
+  "Client-validated market outcomes",
 ];
 
 export default function FinalCTA() {
@@ -23,7 +38,7 @@ export default function FinalCTA() {
           initial={shouldReduce ? false : { opacity: 0, y: 24 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.65, ease: "easeOut" }}
+          transition={{ duration: 0.65, ease: EASE }}
           className="text-center max-w-2xl mx-auto space-y-8"
         >
           <p className="text-[10px] font-bold tracking-[0.2em] uppercase text-groovetop-terracotta">
@@ -40,6 +55,38 @@ export default function FinalCTA() {
           <p className="text-base text-groovetop-navy/60 leading-relaxed text-balance">
             This project demonstrates mobile UX design, visual design judgment, Figma systems thinking, component system structure, and the ability to refine academic work into a portfolio-grade product artifact.
           </p>
+
+          {/* Trust block — claim-safe scope framing */}
+          <div className="grid sm:grid-cols-2 gap-4 text-left max-w-2xl mx-auto pt-2">
+            <div className="rounded-2xl border border-groovetop-green/20 bg-groovetop-green/[0.06] p-6">
+              <p className="text-[10px] font-bold tracking-[0.15em] uppercase text-groovetop-green mb-4">
+                What this proves
+              </p>
+              <ul className="space-y-2.5">
+                {PROVES.map((item) => (
+                  <li key={item} className="flex items-start gap-2.5 text-sm text-groovetop-navy/70 leading-snug">
+                    <svg width="14" height="14" viewBox="0 0 16 16" fill="none" className="mt-0.5 flex-shrink-0" aria-hidden="true">
+                      <path d="M3 8l3.5 3.5L13 4.5" stroke="#2EAD8C" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round"/>
+                    </svg>
+                    {item}
+                  </li>
+                ))}
+              </ul>
+            </div>
+            <div className="rounded-2xl border border-groovetop-navy/10 bg-white p-6">
+              <p className="text-[10px] font-bold tracking-[0.15em] uppercase text-groovetop-navy/40 mb-4">
+                What it does not prove
+              </p>
+              <ul className="space-y-2.5">
+                {NOT_PROVES.map((item) => (
+                  <li key={item} className="flex items-start gap-2.5 text-sm text-groovetop-navy/65 leading-snug">
+                    <span className="mt-2 h-px w-3 flex-shrink-0 bg-groovetop-navy/40" aria-hidden="true" />
+                    {item}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
 
           {/* Skills chips */}
           <div className="flex flex-wrap justify-center gap-2">

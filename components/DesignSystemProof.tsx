@@ -2,6 +2,7 @@
 
 import { motion, useReducedMotion } from "framer-motion";
 import { useRef, useEffect, useState } from "react";
+import { EASE, STAGGER_STEP } from "@/lib/motion";
 
 const TOKEN_ROWS = [
   {
@@ -137,14 +138,16 @@ function TokenRow({
     <motion.div
       initial={shouldReduce ? false : { opacity: 0, x: -20 }}
       animate={isVisible ? { opacity: 1, x: 0 } : {}}
-      transition={{ duration: 0.5, delay: index * 0.1, ease: "easeOut" }}
+      transition={{ duration: 0.5, delay: index * STAGGER_STEP, ease: EASE }}
       className="relative"
     >
-      {/* Desktop: horizontal card row with SVG connector */}
-      <div className="hidden lg:grid grid-cols-[1fr_auto_1fr_auto_1fr] items-center gap-0 min-h-[88px]">
+      {/* Desktop: horizontal card row with SVG connector.
+          items-stretch + justify-center keeps every card equal height so the
+          connectors land on the exact vertical center of each row. */}
+      <div className="hidden lg:grid grid-cols-[1fr_auto_1fr_auto_1fr] items-stretch gap-0 min-h-[96px]">
 
         {/* Card 1 — Primitive Token */}
-        <div className="rounded-xl border border-groovetop-navy/8 bg-white p-4 space-y-2 shadow-sm">
+        <div className="flex flex-col justify-center gap-2 rounded-xl border border-groovetop-navy/8 bg-white p-4 shadow-sm">
           <div className="flex items-center gap-3">
             <div
               className="w-8 h-8 rounded-lg flex-shrink-0 border border-black/10 shadow-inner"
@@ -156,7 +159,7 @@ function TokenRow({
               <p className="text-[10px] text-groovetop-navy/40 font-medium">{row.primitive.token}</p>
             </div>
           </div>
-          <p className="text-[9px] font-mono text-groovetop-navy/30 bg-groovetop-oat px-2 py-1 rounded-lg">
+          <p className="text-[9px] font-mono text-groovetop-navy/30 bg-groovetop-oat px-2 py-1 rounded-lg w-fit">
             {row.primitive.hex}
           </p>
         </div>
@@ -172,7 +175,7 @@ function TokenRow({
               strokeDasharray="3 3"
               initial={shouldReduce ? { pathLength: 1 } : { pathLength: 0 }}
               animate={isVisible ? { pathLength: 1 } : {}}
-              transition={{ duration: 0.6, delay: index * 0.1 + 0.3 }}
+              transition={{ duration: 0.6, delay: index * STAGGER_STEP + 0.3, ease: EASE }}
             />
             <motion.path
               d="M30 6 L38 10 L30 14"
@@ -183,13 +186,13 @@ function TokenRow({
               strokeLinejoin="round"
               initial={shouldReduce ? { opacity: 1 } : { opacity: 0 }}
               animate={isVisible ? { opacity: 1 } : {}}
-              transition={{ duration: 0.2, delay: index * 0.1 + 0.7 }}
+              transition={{ duration: 0.2, delay: index * STAGGER_STEP + 0.7, ease: EASE }}
             />
           </svg>
         </div>
 
         {/* Card 2 — Semantic Token */}
-        <div className="rounded-xl border border-groovetop-terracotta/20 bg-white p-4 shadow-sm">
+        <div className="flex flex-col justify-center rounded-xl border border-groovetop-terracotta/20 bg-white p-4 shadow-sm">
           <div className="space-y-1">
             <p className="text-[9px] font-bold tracking-[0.15em] uppercase text-groovetop-terracotta/60 mb-2">
               Semantic Token
@@ -209,7 +212,7 @@ function TokenRow({
               strokeDasharray="3 3"
               initial={shouldReduce ? { pathLength: 1 } : { pathLength: 0 }}
               animate={isVisible ? { pathLength: 1 } : {}}
-              transition={{ duration: 0.6, delay: index * 0.1 + 0.5 }}
+              transition={{ duration: 0.6, delay: index * STAGGER_STEP + 0.5, ease: EASE }}
             />
             <motion.path
               d="M30 6 L38 10 L30 14"
@@ -220,13 +223,13 @@ function TokenRow({
               strokeLinejoin="round"
               initial={shouldReduce ? { opacity: 1 } : { opacity: 0 }}
               animate={isVisible ? { opacity: 1 } : {}}
-              transition={{ duration: 0.2, delay: index * 0.1 + 0.85 }}
+              transition={{ duration: 0.2, delay: index * STAGGER_STEP + 0.85, ease: EASE }}
             />
           </svg>
         </div>
 
         {/* Card 3 — UI Application */}
-        <div className="rounded-xl border border-groovetop-navy/8 bg-white p-4 space-y-3 shadow-sm">
+        <div className="flex flex-col justify-center gap-3 rounded-xl border border-groovetop-navy/8 bg-white p-4 shadow-sm">
           <p className="text-[9px] font-bold tracking-[0.15em] uppercase text-groovetop-navy/35">
             UI Application
           </p>
@@ -299,7 +302,7 @@ export default function DesignSystemProof() {
           initial={shouldReduce ? false : { opacity: 0, y: 24 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
+          transition={{ duration: 0.6, ease: EASE }}
           className="mb-14"
         >
           <p className="text-[10px] font-bold tracking-[0.2em] uppercase text-groovetop-terracotta mb-4">
@@ -316,6 +319,19 @@ export default function DesignSystemProof() {
               Primitive → Semantic → UI Application. Every surface is one resolved token.
             </p>
           </div>
+        </motion.div>
+
+        {/* Naming logic — mapping rationale */}
+        <motion.div
+          initial={shouldReduce ? false : { opacity: 0, y: 16 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.55, ease: EASE }}
+          className="mb-10 border-l-2 border-groovetop-terracotta/40 pl-5"
+        >
+          <p className="text-sm text-groovetop-navy/65 leading-relaxed max-w-3xl">
+            Groovetop DS v1 applies strict variable-mapping logic: global primitives hold the raw visual values, while semantic tokens are named by <span className="font-semibold text-groovetop-navy">role destination</span> — <span className="font-mono text-[0.8em] text-groovetop-navy/80">color.background.hero</span>, <span className="font-mono text-[0.8em] text-groovetop-navy/80">color.cta.primary</span> — so the system reads as intent, not hex codes, and translates cleanly into handoff and front-end code.
+          </p>
         </motion.div>
 
         {/* Column headers — desktop only */}
@@ -343,7 +359,7 @@ export default function DesignSystemProof() {
           initial={shouldReduce ? false : { opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.6, delay: 0.3 }}
+          transition={{ duration: 0.6, delay: 0.3, ease: EASE }}
           className="mt-14 p-8 rounded-2xl bg-groovetop-navy text-center"
         >
           <p className="text-base text-white/70 leading-relaxed max-w-2xl mx-auto">

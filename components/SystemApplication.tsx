@@ -1,6 +1,7 @@
 "use client";
 
 import { motion, useReducedMotion } from "framer-motion";
+import { EASE, STAGGER_STEP } from "@/lib/motion";
 
 const PROOF_CARDS = [
   {
@@ -42,7 +43,7 @@ export default function SystemApplication() {
           initial={shouldReduce ? false : { opacity: 0, y: 24 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
+          transition={{ duration: 0.6, ease: EASE }}
           className="mb-14"
         >
           <p className="text-[10px] font-bold tracking-[0.2em] uppercase text-groovetop-terracotta mb-4">
@@ -69,7 +70,7 @@ export default function SystemApplication() {
               initial={shouldReduce ? false : { opacity: 0, y: 28 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-60px" }}
-              transition={{ duration: 0.55, delay: i * 0.08, ease: "easeOut" }}
+              transition={{ duration: 0.55, delay: i * STAGGER_STEP, ease: EASE }}
               className="rounded-2xl border border-white/8 bg-white/5 backdrop-blur-sm p-6 space-y-2"
             >
               <p className={`text-[clamp(2rem,4vw,2.5rem)] font-extrabold leading-none tracking-tight ${card.color}`}>
@@ -86,7 +87,7 @@ export default function SystemApplication() {
           initial={shouldReduce ? false : { opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.6, delay: 0.2 }}
+          transition={{ duration: 0.6, delay: 0.2, ease: EASE }}
           className="rounded-2xl border border-white/8 bg-white/5 p-8 max-w-3xl"
         >
           <p className="text-base text-white/65 leading-relaxed">

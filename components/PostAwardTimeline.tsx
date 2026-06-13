@@ -1,6 +1,7 @@
 "use client";
 
 import { motion, useReducedMotion } from "framer-motion";
+import { EASE, STAGGER_STEP } from "@/lib/motion";
 
 const TIMELINE_STEPS = [
   {
@@ -61,7 +62,7 @@ export default function PostAwardTimeline() {
           initial={shouldReduce ? false : { opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.55 }}
+          transition={{ duration: 0.55, ease: EASE }}
           className="mb-12"
         >
           <p className="text-[10px] font-bold tracking-[0.2em] uppercase text-groovetop-terracotta mb-4">
@@ -96,7 +97,7 @@ export default function PostAwardTimeline() {
                 initial={shouldReduce ? false : { opacity: 0, y: 24 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: "-40px" }}
-                transition={{ duration: 0.5, delay: i * 0.08, ease: "easeOut" }}
+                transition={{ duration: 0.5, delay: i * STAGGER_STEP, ease: EASE }}
                 className="relative flex lg:flex-col gap-4 lg:gap-3"
               >
                 {/* Node */}
