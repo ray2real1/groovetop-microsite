@@ -4,278 +4,153 @@ import { motion, useReducedMotion } from "framer-motion";
 import { useRef, useEffect, useState } from "react";
 import { EASE, STAGGER_STEP } from "@/lib/motion";
 
-const TOKEN_ROWS = [
-  {
-    primitive: { name: "Global Navy",          hex: "#1B2A4A", token: "Blue 900"    },
-    semantic:  { name: "color.background.hero"                                       },
-    ui:        { name: "Hero Canvas",          type: "block",  color: "#1B2A4A"      },
-  },
-  {
-    primitive: { name: "Global Terracotta",    hex: "#C96F53", token: "Clay 400"    },
-    semantic:  { name: "color.cta.primary"                                           },
-    ui:        { name: "Primary Button",       type: "button", color: "#C96F53"      },
-  },
-  {
-    primitive: { name: "Global Oat",           hex: "#FAF7F1", token: "Cream 100"   },
-    semantic:  { name: "color.surface.default"                                       },
-    ui:        { name: "Page Background",      type: "surface", color: "#FAF7F1"    },
-  },
-  {
-    primitive: { name: "Global White",         hex: "#FFFFFF", token: "White 000"   },
-    semantic:  { name: "color.surface.card"                                          },
-    ui:        { name: "Content Cards",        type: "card",    color: "#FFFFFF"    },
-  },
-  {
-    primitive: { name: "Global Success Green", hex: "#2EAD8C", token: "Teal 400"   },
-    semantic:  { name: "color.status.available"                                      },
-    ui:        { name: "Availability Badge",   type: "badge",   color: "#2EAD8C"   },
-  },
-  {
-    primitive: { name: "Global Interactive",   hex: "#618FED", token: "Blue 300"   },
-    semantic:  { name: "color.link.secondary"                                        },
-    ui:        { name: "Secondary Links",      type: "link",    color: "#618FED"   },
-  },
+type Row = {
+  name: string;
+  scale: string;
+  hex: string;
+  semantic: string;
+  line: string;
+  ui: "block" | "button" | "surface" | "card" | "badge" | "link";
+  chip: string;
+  uiLabel: string;
+};
+
+const ROWS: Row[] = [
+  { name: "Global Navy",            scale: "Blue 900",  hex: "#1B2A4A", semantic: "color.background.hero",   line: "rgba(255,255,255,0.5)",  ui: "block",   chip: "Canvas",         uiLabel: "Hero canvas" },
+  { name: "Global Terracotta",      scale: "Clay 400",  hex: "#C96F53", semantic: "color.cta.primary",      line: "#C96F53",                ui: "button",  chip: "Adopt now",      uiLabel: "Primary action button" },
+  { name: "Global Oat",             scale: "Cream 100", hex: "#FAF7F1", semantic: "color.surface.default",  line: "rgba(250,247,241,0.65)", ui: "surface", chip: "Page surface",   uiLabel: "Page background" },
+  { name: "Global White",           scale: "White 000", hex: "#FFFFFF", semantic: "color.surface.card",     line: "rgba(255,255,255,0.6)",  ui: "card",    chip: "Content card",   uiLabel: "Content cards" },
+  { name: "Global Success Green",   scale: "Teal 400",  hex: "#2EAD8C", semantic: "color.status.available", line: "#2EAD8C",                ui: "badge",   chip: "Available",      uiLabel: "Availability badge" },
+  { name: "Global Interactive Blue",scale: "Blue 300",  hex: "#618FED", semantic: "color.link.secondary",   line: "#618FED",                ui: "link",    chip: "View profile →", uiLabel: "Secondary links + focus" },
 ];
 
-function UIPreview({ type, color, name }: { type: string; color: string; name: string }) {
-  const dark = color === "#1B2A4A" || color === "#C96F53" || color === "#2EAD8C" || color === "#618FED";
+const CY = (i: number) => 150 + i * 88;
 
-  if (type === "block") {
+/* SVG UI endpoint chip (desktop schematic) */
+function UIChipSVG({ row, cy }: { row: Row; cy: number }) {
+  const x = 700;
+  const w = 240;
+  if (row.ui === "block") {
     return (
-      <div
-        className="w-full h-10 rounded-lg flex items-center justify-center"
-        style={{ background: color }}
-        aria-label={`${name} — dark navy background block`}
-      >
-        <span className="text-[9px] text-white/50 font-medium uppercase tracking-widest">Canvas</span>
-      </div>
+      <g>
+        <rect x={x} y={cy - 22} width={w} height={44} rx={12} fill="#1B2A4A" stroke="rgba(255,255,255,0.25)" />
+        <text x={820} y={cy + 5} fill="rgba(255,255,255,0.6)" fontSize="13" fontWeight="600" textAnchor="middle">{row.chip}</text>
+      </g>
     );
   }
-  if (type === "button") {
+  if (row.ui === "button") {
     return (
-      <div
-        className="w-full h-10 rounded-xl flex items-center justify-center text-[11px] font-bold text-white"
-        style={{ background: color }}
-        aria-label={`${name} — primary CTA button`}
-      >
-        Adopt Now
-      </div>
+      <g>
+        <rect x={x} y={cy - 22} width={w} height={44} rx={12} fill="#C96F53" />
+        <text x={820} y={cy + 5} fill="#FFFFFF" fontSize="13" fontWeight="700" textAnchor="middle">{row.chip}</text>
+      </g>
     );
   }
-  if (type === "surface") {
+  if (row.ui === "surface") {
     return (
-      <div
-        className="w-full h-10 rounded-lg border border-black/8 flex items-center justify-center"
-        style={{ background: color }}
-        aria-label={`${name} — page background surface`}
-      >
-        <span className="text-[9px] text-black/30 font-medium uppercase tracking-widest">Page Surface</span>
-      </div>
+      <g>
+        <rect x={x} y={cy - 22} width={w} height={44} rx={12} fill="#FAF7F1" />
+        <text x={820} y={cy + 5} fill="#1B2A4A" fontSize="13" fontWeight="600" textAnchor="middle">{row.chip}</text>
+      </g>
     );
   }
-  if (type === "card") {
+  if (row.ui === "card") {
     return (
-      <div
-        className="w-full h-10 rounded-xl border border-black/10 shadow-sm flex items-center gap-2 px-3"
-        style={{ background: color }}
-        aria-label={`${name} — content card`}
-      >
-        <div className="w-5 h-5 rounded-lg bg-black/5 flex-shrink-0" />
-        <div className="flex-1 space-y-1">
-          <div className="h-1.5 bg-black/8 rounded w-3/4" />
-          <div className="h-1.5 bg-black/5 rounded w-1/2" />
-        </div>
-      </div>
+      <g>
+        <rect x={x} y={cy - 22} width={w} height={44} rx={12} fill="#FFFFFF" />
+        <text x={820} y={cy + 5} fill="#1B2A4A" fontSize="13" fontWeight="600" textAnchor="middle">{row.chip}</text>
+      </g>
     );
   }
-  if (type === "badge") {
+  if (row.ui === "badge") {
     return (
-      <div className="flex items-center gap-2" aria-label={`${name} — availability badge`}>
-        <span
-          className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-[11px] font-bold text-white"
-          style={{ background: color }}
-        >
-          <span className="w-1.5 h-1.5 rounded-full bg-white/70" aria-hidden="true" />
-          Available
-        </span>
-        <span className="text-[10px] text-groovetop-navy/35 font-medium">+ label</span>
-      </div>
+      <g>
+        <rect x={740} y={cy - 18} width={160} height={36} rx={18} fill="#2EAD8C" />
+        <text x={820} y={cy + 5} fill="#FFFFFF" fontSize="13" fontWeight="700" textAnchor="middle">{row.chip}</text>
+      </g>
     );
   }
-  if (type === "link") {
-    return (
-      <div className="flex items-center gap-2" aria-label={`${name} — secondary link and focus indicator`}>
-        <span
-          className="text-sm font-semibold underline underline-offset-2"
-          style={{ color }}
-        >
-          View Profile →
-        </span>
-        <span
-          className="text-[10px] px-1.5 py-0.5 rounded border font-medium"
-          style={{ borderColor: color, color }}
-        >
-          Focus
-        </span>
-      </div>
-    );
-  }
-  return null;
+  return (
+    <g>
+      <rect x={x} y={cy - 22} width={w} height={44} rx={12} fill="rgba(97,143,237,0.16)" stroke="#618FED" />
+      <text x={820} y={cy + 5} fill="#618FED" fontSize="13" fontWeight="600" textAnchor="middle">{row.chip}</text>
+    </g>
+  );
 }
 
-function TokenRow({
-  row,
-  index,
-  isVisible,
-}: {
-  row: typeof TOKEN_ROWS[0];
-  index: number;
-  isVisible: boolean;
-}) {
-  const shouldReduce = useReducedMotion();
-
+/* HTML UI endpoint preview (mobile stacked) */
+function UIChipMobile({ row }: { row: Row }) {
+  if (row.ui === "button")
+    return <div className="w-full rounded-xl bg-groovetop-terracotta text-white text-xs font-bold text-center py-2.5">{row.chip}</div>;
+  if (row.ui === "badge")
+    return (
+      <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-groovetop-green text-white text-xs font-bold">
+        <span className="w-1.5 h-1.5 rounded-full bg-white/70" aria-hidden="true" />Available
+      </span>
+    );
+  if (row.ui === "link")
+    return <span className="text-sm font-semibold underline underline-offset-2" style={{ color: "#618FED" }}>{row.chip}</span>;
+  if (row.ui === "block")
+    return <div className="w-full rounded-xl py-2.5 text-center text-[11px] font-medium uppercase tracking-widest text-white/50" style={{ background: "#1B2A4A", border: "1px solid rgba(255,255,255,0.25)" }}>Hero canvas</div>;
   return (
-    <motion.div
-      initial={shouldReduce ? false : { opacity: 0, x: -20 }}
-      animate={isVisible ? { opacity: 1, x: 0 } : {}}
-      transition={{ duration: 0.5, delay: index * STAGGER_STEP, ease: EASE }}
-      className="relative"
-    >
-      {/* Desktop: horizontal card row with SVG connector.
-          items-stretch + justify-center keeps every card equal height so the
-          connectors land on the exact vertical center of each row. */}
-      <div className="hidden lg:grid grid-cols-[1fr_auto_1fr_auto_1fr] items-stretch gap-0 min-h-[96px]">
+    <div className="w-full rounded-xl py-2.5 text-center text-[11px] font-semibold uppercase tracking-widest" style={{ background: row.hex, color: "#1B2A4A", border: "1px solid rgba(0,0,0,0.08)" }}>
+      {row.ui === "surface" ? "Page surface" : "Content card"}
+    </div>
+  );
+}
 
-        {/* Card 1 — Primitive Token */}
-        <div className="flex flex-col justify-center gap-2 rounded-xl border border-groovetop-navy/8 bg-white p-4 shadow-sm">
-          <div className="flex items-center gap-3">
-            <div
-              className="w-8 h-8 rounded-lg flex-shrink-0 border border-black/10 shadow-inner"
-              style={{ background: row.primitive.hex }}
-              aria-hidden="true"
-            />
-            <div>
-              <p className="text-xs font-bold text-groovetop-navy leading-tight">{row.primitive.name}</p>
-              <p className="text-[10px] text-groovetop-navy/40 font-medium">{row.primitive.token}</p>
-            </div>
-          </div>
-          <p className="text-[9px] font-mono text-groovetop-navy/30 bg-groovetop-oat px-2 py-1 rounded-lg w-fit">
-            {row.primitive.hex}
-          </p>
-        </div>
+function StationHeaders() {
+  const cols = [
+    { x: 181, title: "PRIMITIVE TOKEN", sub: "raw value" },
+    { x: 500, title: "SEMANTIC TOKEN", sub: "role destination" },
+    { x: 820, title: "UI APPLICATION", sub: "rendered surface" },
+  ];
+  return (
+    <g textAnchor="middle" fontFamily="inherit">
+      {cols.map((c) => (
+        <g key={c.title}>
+          <text x={c.x} y={78} fill="rgba(255,255,255,0.55)" fontSize="13" fontWeight="700" letterSpacing="1.6">{c.title}</text>
+          <text x={c.x} y={94} fill="rgba(255,255,255,0.3)" fontSize="11">{c.sub}</text>
+        </g>
+      ))}
+      <text x={350} y={84} fill="rgba(255,255,255,0.22)" fontSize="16" textAnchor="middle">→</text>
+      <text x={650} y={84} fill="rgba(255,255,255,0.22)" fontSize="16" textAnchor="middle">→</text>
+    </g>
+  );
+}
 
-        {/* Connector Arrow 1 */}
-        <div className="flex items-center justify-center w-10" aria-hidden="true">
-          <svg width="40" height="20" viewBox="0 0 40 20" fill="none" overflow="visible">
-            <motion.path
-              d="M2 10 H34"
-              stroke="#1B2A4A"
-              strokeOpacity="0.15"
-              strokeWidth="1.5"
-              strokeDasharray="3 3"
-              initial={shouldReduce ? { pathLength: 1 } : { pathLength: 0 }}
-              animate={isVisible ? { pathLength: 1 } : {}}
-              transition={{ duration: 0.6, delay: index * STAGGER_STEP + 0.3, ease: EASE }}
-            />
-            <motion.path
-              d="M30 6 L38 10 L30 14"
-              stroke="#1B2A4A"
-              strokeOpacity="0.2"
-              strokeWidth="1.5"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              initial={shouldReduce ? { opacity: 1 } : { opacity: 0 }}
-              animate={isVisible ? { opacity: 1 } : {}}
-              transition={{ duration: 0.2, delay: index * STAGGER_STEP + 0.7, ease: EASE }}
-            />
-          </svg>
-        </div>
-
-        {/* Card 2 — Semantic Token */}
-        <div className="flex flex-col justify-center rounded-xl border border-groovetop-terracotta/20 bg-white p-4 shadow-sm">
-          <div className="space-y-1">
-            <p className="text-[9px] font-bold tracking-[0.15em] uppercase text-groovetop-terracotta/60 mb-2">
-              Semantic Token
-            </p>
-            <p className="text-xs font-mono font-bold text-groovetop-navy leading-tight">{row.semantic.name}</p>
-          </div>
-        </div>
-
-        {/* Connector Arrow 2 */}
-        <div className="flex items-center justify-center w-10" aria-hidden="true">
-          <svg width="40" height="20" viewBox="0 0 40 20" fill="none" overflow="visible">
-            <motion.path
-              d="M2 10 H34"
-              stroke="#C96F53"
-              strokeOpacity="0.2"
-              strokeWidth="1.5"
-              strokeDasharray="3 3"
-              initial={shouldReduce ? { pathLength: 1 } : { pathLength: 0 }}
-              animate={isVisible ? { pathLength: 1 } : {}}
-              transition={{ duration: 0.6, delay: index * STAGGER_STEP + 0.5, ease: EASE }}
-            />
-            <motion.path
-              d="M30 6 L38 10 L30 14"
-              stroke="#C96F53"
-              strokeOpacity="0.3"
-              strokeWidth="1.5"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              initial={shouldReduce ? { opacity: 1 } : { opacity: 0 }}
-              animate={isVisible ? { opacity: 1 } : {}}
-              transition={{ duration: 0.2, delay: index * STAGGER_STEP + 0.85, ease: EASE }}
-            />
-          </svg>
-        </div>
-
-        {/* Card 3 — UI Application */}
-        <div className="flex flex-col justify-center gap-3 rounded-xl border border-groovetop-navy/8 bg-white p-4 shadow-sm">
-          <p className="text-[9px] font-bold tracking-[0.15em] uppercase text-groovetop-navy/35">
-            UI Application
-          </p>
-          <UIPreview type={row.ui.type} color={row.ui.color} name={row.ui.name} />
-          <p className="text-[10px] font-semibold text-groovetop-navy/60">{row.ui.name}</p>
-        </div>
-      </div>
-
-      {/* Mobile: stacked layout */}
-      <div className="lg:hidden flex flex-col gap-3">
-        <div className="flex items-center gap-3 p-4 rounded-xl border border-groovetop-navy/8 bg-white shadow-sm">
-          <div
-            className="w-8 h-8 rounded-lg flex-shrink-0 border border-black/10"
-            style={{ background: row.primitive.hex }}
-            aria-hidden="true"
-          />
-          <div className="min-w-0">
-            <p className="text-xs font-bold text-groovetop-navy">{row.primitive.name}</p>
-            <p className="text-[10px] font-mono text-groovetop-navy/40">{row.primitive.hex}</p>
-          </div>
-        </div>
-        <div className="flex items-center justify-start pl-6">
-          <svg width="12" height="24" viewBox="0 0 12 24" fill="none" aria-hidden="true">
-            <path d="M6 2 V18 M2 14 L6 22 L10 14" stroke="#1B2A4A" strokeOpacity="0.2" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-          </svg>
-        </div>
-        <div className="p-3 rounded-xl border border-groovetop-terracotta/20 bg-white shadow-sm">
-          <p className="text-[9px] font-mono font-bold text-groovetop-navy">{row.semantic.name}</p>
-        </div>
-        <div className="flex items-center justify-start pl-6">
-          <svg width="12" height="24" viewBox="0 0 12 24" fill="none" aria-hidden="true">
-            <path d="M6 2 V18 M2 14 L6 22 L10 14" stroke="#C96F53" strokeOpacity="0.3" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-          </svg>
-        </div>
-        <div className="p-4 rounded-xl border border-groovetop-navy/8 bg-white shadow-sm space-y-2">
-          <UIPreview type={row.ui.type} color={row.ui.color} name={row.ui.name} />
-          <p className="text-xs font-semibold text-groovetop-navy/60">{row.ui.name}</p>
-        </div>
-      </div>
-    </motion.div>
+function Connector({
+  d,
+  color,
+  isVisible,
+  delay,
+  shouldReduce,
+}: {
+  d: string;
+  color: string;
+  isVisible: boolean;
+  delay: number;
+  shouldReduce: boolean | null;
+}) {
+  return (
+    <>
+      <path d={d} stroke={color} strokeWidth={7} fill="none" opacity={0.16} />
+      <motion.path
+        d={d}
+        stroke={color}
+        strokeWidth={2.5}
+        fill="none"
+        initial={shouldReduce ? { pathLength: 1 } : { pathLength: 0 }}
+        animate={isVisible ? { pathLength: 1 } : {}}
+        transition={{ duration: 0.7, delay, ease: EASE }}
+      />
+    </>
   );
 }
 
 export default function DesignSystemProof() {
   const shouldReduce = useReducedMotion();
-  const sectionRef   = useRef<HTMLElement>(null);
+  const sectionRef = useRef<HTMLElement>(null);
   const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
@@ -293,74 +168,155 @@ export default function DesignSystemProof() {
       ref={sectionRef}
       aria-labelledby="ds-heading"
       tabIndex={-1}
-      className="py-section bg-groovetop-oat"
+      className="py-section bg-groovetop-navy overflow-hidden"
     >
       <div className="max-w-content mx-auto px-6 lg:px-10">
-
         {/* Header */}
         <motion.div
           initial={shouldReduce ? false : { opacity: 0, y: 24 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6, ease: EASE }}
-          className="mb-14"
+          className="mb-10"
         >
           <p className="text-[10px] font-bold tracking-[0.2em] uppercase text-groovetop-terracotta mb-4">
-            Design System Proof
+            Design System Proof · The Proof Artifact
           </p>
           <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-4">
-            <h2
-              id="ds-heading"
-              className="text-[clamp(1.75rem,3vw,2.5rem)] font-extrabold tracking-tight text-groovetop-navy"
-            >
-              Semantic Token Flow
+            <h2 id="ds-heading" className="text-display-lg font-extrabold tracking-tight text-white">
+              Semantic token flow
             </h2>
-            <p className="text-sm text-groovetop-navy/45 max-w-md leading-relaxed lg:text-right">
-              Primitive → Semantic → UI Application. Every surface is one resolved token.
+            <p className="text-sm text-white/55 max-w-md leading-relaxed lg:text-right">
+              The climax of the system story — every color, every surface, one resolved path from primitive to UI.
             </p>
           </div>
         </motion.div>
 
-        {/* Naming logic — mapping rationale */}
+        {/* Naming logic */}
         <motion.div
           initial={shouldReduce ? false : { opacity: 0, y: 16 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.55, ease: EASE }}
-          className="mb-10 border-l-2 border-groovetop-terracotta/40 pl-5"
+          className="mb-10 border-l-2 border-groovetop-terracotta/50 pl-5"
         >
-          <p className="text-sm text-groovetop-navy/65 leading-relaxed max-w-3xl">
-            Groovetop DS v1 applies strict variable-mapping logic: global primitives hold the raw visual values, while semantic tokens are named by <span className="font-semibold text-groovetop-navy">role destination</span> — <span className="font-mono text-[0.8em] text-groovetop-navy/80">color.background.hero</span>, <span className="font-mono text-[0.8em] text-groovetop-navy/80">color.cta.primary</span> — so the system reads as intent, not hex codes, and translates cleanly into handoff and front-end code.
+          <p className="text-sm text-white/65 leading-relaxed max-w-3xl">
+            Groovetop DS v1 applies strict variable-mapping logic: global primitives hold the raw visual values, while semantic tokens are named by <span className="font-semibold text-white">role destination</span> — <span className="font-mono text-[0.8em] text-white/85">color.background.hero</span>, <span className="font-mono text-[0.8em] text-white/85">color.cta.primary</span> — so the system reads as intent, not hex codes, and translates cleanly into handoff and front-end code.
           </p>
         </motion.div>
 
-        {/* Column headers — desktop only */}
-        <div className="hidden lg:grid grid-cols-[1fr_auto_1fr_auto_1fr] gap-0 mb-4 px-px" aria-hidden="true">
-          {["Primitive Token", "", "Semantic Token", "", "UI Application"].map((label, i) => (
-            <div key={i} className={`${i % 2 !== 0 ? "w-10" : ""}`}>
-              {label && (
-                <p className="text-[9px] font-bold tracking-[0.2em] uppercase text-groovetop-navy/30 px-4">
-                  {label}
-                </p>
-              )}
-            </div>
-          ))}
+        {/* Desktop schematic */}
+        <svg
+          viewBox="0 0 1000 656"
+          width="100%"
+          className="hidden lg:block"
+          role="img"
+          aria-label="Six numbered token lanes flowing through three stations: primitive token, semantic token, and UI application. Global Navy resolves to color.background.hero and the hero canvas; Global Terracotta to color.cta.primary and the primary action button; Global Oat to color.surface.default and the page background; Global White to color.surface.card and content cards; Global Success Green to color.status.available and the availability badge; Global Interactive Blue to color.link.secondary and secondary links and focus states."
+        >
+          <rect x={50} y={102} width={262} height={520} rx={16} fill="rgba(255,255,255,0.03)" />
+          <rect x={394} y={102} width={212} height={520} rx={16} fill="rgba(255,255,255,0.03)" />
+          <rect x={694} y={102} width={252} height={520} rx={16} fill="rgba(255,255,255,0.03)" />
+
+          <StationHeaders />
+
+          {ROWS.map((row, i) => {
+            const cy = CY(i);
+            const c1 = `M306 ${cy} C 340 ${cy - 16}, 366 ${cy + 16}, 400 ${cy}`;
+            const c2 = `M600 ${cy} C 634 ${cy - 16}, 660 ${cy + 16}, 700 ${cy}`;
+            const lightSwatch = row.hex === "#FAF7F1" || row.hex === "#FFFFFF";
+            return (
+              <g key={row.semantic}>
+                {/* row number */}
+                <text x={28} y={cy + 5} fill="rgba(255,255,255,0.3)" fontSize="16" fontWeight="800">
+                  {String(i + 1).padStart(2, "0")}
+                </text>
+
+                {/* primitive card */}
+                <rect x={56} y={cy - 30} width={250} height={60} rx={12} fill="rgba(255,255,255,0.05)" stroke="rgba(255,255,255,0.12)" />
+                <rect x={72} y={cy - 18} width={36} height={36} rx={9} fill={row.hex} stroke={lightSwatch ? "rgba(255,255,255,0.4)" : "rgba(255,255,255,0.2)"} />
+                <text x={120} y={cy - 6} fill="#FFFFFF" fontSize="13" fontWeight="600">{row.name}</text>
+                <text x={120} y={cy + 8} fill="rgba(255,255,255,0.42)" fontSize="10.5">{row.scale}</text>
+                <text x={120} y={cy + 23} fill="rgba(255,255,255,0.55)" fontSize="11" fontFamily="monospace">{row.hex}</text>
+
+                {/* connector 1 */}
+                <Connector d={c1} color={row.line} isVisible={isVisible} delay={i * STAGGER_STEP + 0.1} shouldReduce={shouldReduce} />
+                <circle cx={306} cy={cy} r={3.5} fill={row.line} />
+                <circle cx={400} cy={cy} r={4} fill={row.line} />
+
+                {/* semantic card */}
+                <rect x={400} y={cy - 24} width={200} height={48} rx={12} fill="rgba(255,255,255,0.06)" stroke="rgba(201,111,83,0.45)" />
+                <text x={500} y={cy + 4} fill="#FFFFFF" fontSize="12.5" fontFamily="monospace" textAnchor="middle">{row.semantic}</text>
+
+                {/* connector 2 */}
+                <Connector d={c2} color={row.line} isVisible={isVisible} delay={i * STAGGER_STEP + 0.25} shouldReduce={shouldReduce} />
+                <circle cx={600} cy={cy} r={3.5} fill={row.line} />
+                <circle cx={700} cy={cy} r={4} fill={row.line} />
+
+                {/* UI application */}
+                <UIChipSVG row={row} cy={cy} />
+                <text x={820} y={cy + 40} fill="rgba(255,255,255,0.45)" fontSize="11.5" textAnchor="middle">{row.uiLabel}</text>
+              </g>
+            );
+          })}
+        </svg>
+
+        {/* Mobile stacked */}
+        <div className="lg:hidden space-y-5">
+          {ROWS.map((row, i) => {
+            const lightSwatch = row.hex === "#FAF7F1" || row.hex === "#FFFFFF";
+            return (
+              <motion.div
+                key={row.semantic}
+                initial={shouldReduce ? false : { opacity: 0, y: 18 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-40px" }}
+                transition={{ duration: 0.5, delay: (i % 3) * STAGGER_STEP, ease: EASE }}
+                className="rounded-2xl border border-white/10 bg-white/[0.04] p-4 space-y-3"
+              >
+                <div className="flex items-center gap-3">
+                  <span className="text-xs font-extrabold text-white/30 tabular-nums">{String(i + 1).padStart(2, "0")}</span>
+                  <div
+                    className="w-8 h-8 rounded-lg flex-shrink-0"
+                    style={{ background: row.hex, border: lightSwatch ? "1px solid rgba(255,255,255,0.4)" : "1px solid rgba(255,255,255,0.2)" }}
+                    aria-hidden="true"
+                  />
+                  <div className="min-w-0">
+                    <p className="text-xs font-bold text-white">{row.name}</p>
+                    <p className="text-[10px] font-mono text-white/45">{row.hex} · {row.scale}</p>
+                  </div>
+                </div>
+                <div className="flex items-center gap-2 pl-1 text-white/40" aria-hidden="true">
+                  <svg width="10" height="14" viewBox="0 0 10 14" fill="none"><path d="M5 1v9M2 8l3 4 3-4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" /></svg>
+                  <span className="text-[9px] font-bold tracking-[0.14em] uppercase text-groovetop-terracotta/70">Semantic</span>
+                </div>
+                <div className="rounded-xl border border-groovetop-terracotta/30 bg-white/5 px-3 py-2">
+                  <p className="text-xs font-mono font-bold text-white">{row.semantic}</p>
+                </div>
+                <div className="flex items-center gap-2 pl-1 text-white/40" aria-hidden="true">
+                  <svg width="10" height="14" viewBox="0 0 10 14" fill="none"><path d="M5 1v9M2 8l3 4 3-4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" /></svg>
+                  <span className="text-[9px] font-bold tracking-[0.14em] uppercase text-white/40">UI application</span>
+                </div>
+                <div className="flex items-center justify-between gap-3">
+                  <div className="flex-1"><UIChipMobile row={row} /></div>
+                  <span className="text-[10px] font-semibold text-white/50 flex-shrink-0">{row.uiLabel}</span>
+                </div>
+              </motion.div>
+            );
+          })}
         </div>
 
-        {/* Token rows */}
-        <div className="space-y-4">
-          {TOKEN_ROWS.map((row, i) => (
-            <TokenRow key={row.semantic.name} row={row} index={i} isVisible={isVisible} />
-          ))}
-        </div>
+        {/* Caption */}
+        <p className="mt-10 text-center text-sm text-white/55">
+          Primitive → semantic → UI — 452 color bindings, 63 style applications, 6 screens, one path.
+        </p>
 
         {/* Supporting copy */}
         <motion.div
           initial={shouldReduce ? false : { opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.6, delay: 0.3, ease: EASE }}
-          className="mt-14 p-8 rounded-2xl bg-groovetop-navy text-center"
+          transition={{ duration: 0.6, delay: 0.2, ease: EASE }}
+          className="mt-10 p-8 rounded-2xl border border-white/10 bg-white/[0.04] text-center"
         >
           <p className="text-base text-white/70 leading-relaxed max-w-2xl mx-auto">
             Groovetop DS v1 expanded the award-recognized prototype into a documented reusable system. The refinement preserved the original visual direction while adding structure, consistency, and handoff clarity.

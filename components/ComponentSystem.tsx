@@ -110,14 +110,24 @@ const COMPONENTS = [
   },
 ];
 
+const RULES = [
+  {
+    label: "Standardized",
+    tone: "accent",
+    body: "Button, Pet Card, Badge, Search Bar, and Bottom Nav are real Figma component sets, standardized through shared variant axes and editable properties so a single source set drives every instance.",
+  },
+  {
+    label: "Local by design",
+    tone: "muted",
+    body: "Viewport layout containers stay local where needed to preserve spacing fidelity. Reuse is applied where it compounds — not forced where it would add system complexity without payoff.",
+  },
+];
+
 export default function ComponentSystem() {
   const shouldReduce = useReducedMotion();
 
   return (
-    <section
-      aria-labelledby="components-heading"
-      className="py-section bg-white"
-    >
+    <section aria-labelledby="components-heading" className="py-section bg-white">
       <div className="max-w-content mx-auto px-6 lg:px-10">
         <motion.div
           initial={shouldReduce ? false : { opacity: 0, y: 20 }}
@@ -130,14 +140,11 @@ export default function ComponentSystem() {
             Component System Structure
           </p>
           <div className="flex flex-col lg:flex-row lg:items-start lg:justify-between gap-4">
-            <h2
-              id="components-heading"
-              className="text-[clamp(1.75rem,3vw,2.5rem)] font-extrabold tracking-tight text-groovetop-navy leading-[1.1]"
-            >
+            <h2 id="components-heading" className="text-display-md font-extrabold tracking-tight text-groovetop-navy leading-[1.1]">
               5 component sets.<br />23 variants. 9 editable properties.
             </h2>
             <p className="text-sm text-groovetop-navy/65 max-w-xs leading-relaxed lg:pt-1.5 lg:text-right">
-              Built as real Figma component sets. Source sets are preserved in the DS v1 file and available from the Assets panel for direct reuse.
+              The structure is governed by rules, not inventory: what gets standardized, and what intentionally stays local to protect layout fidelity.
             </p>
           </div>
         </motion.div>
@@ -154,23 +161,16 @@ export default function ComponentSystem() {
               aria-labelledby={`comp-title-${i}`}
               className="rounded-2xl border border-groovetop-navy/8 bg-groovetop-oat overflow-hidden"
             >
-              {/* Preview */}
               <div className="p-5 bg-white border-b border-groovetop-navy/8 min-h-[100px] flex items-center">
                 {comp.preview}
               </div>
-
-              {/* Info */}
               <div className="p-5 space-y-4">
                 <div>
-                  <h3
-                    id={`comp-title-${i}`}
-                    className="text-sm font-bold text-groovetop-navy mb-1"
-                  >
+                  <h3 id={`comp-title-${i}`} className="text-sm font-bold text-groovetop-navy mb-1">
                     {comp.name}
                   </h3>
                   <p className="text-xs text-groovetop-navy/50 leading-relaxed">{comp.purpose}</p>
                 </div>
-
                 <div className="space-y-2">
                   {comp.props.map((prop) => (
                     <div key={prop.axis}>
@@ -195,21 +195,32 @@ export default function ComponentSystem() {
           ))}
         </div>
 
-        {/* System rule — component boundary rationale */}
-        <motion.div
-          initial={shouldReduce ? false : { opacity: 0, y: 16 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-60px" }}
-          transition={{ duration: 0.55, delay: 0.1, ease: EASE }}
-          className="mt-8 flex items-start gap-4 rounded-2xl border border-groovetop-navy/8 bg-groovetop-oat p-6 lg:p-7"
-        >
-          <span className="mt-0.5 flex-shrink-0 text-[10px] font-bold tracking-[0.15em] uppercase text-groovetop-terracotta">
-            System Rule
-          </span>
-          <p className="text-sm text-groovetop-navy/65 leading-relaxed max-w-3xl">
-            Button, Badge, Search Bar, Pet Card, and Bottom Nav are standardized through reusable component properties. Viewport layout containers stay local where needed to preserve spacing fidelity — reuse is applied where it compounds, not forced where it would add system complexity without payoff.
-          </p>
-        </motion.div>
+        {/* System rules — what was standardized vs what stayed local */}
+        <div className="mt-8 grid sm:grid-cols-2 gap-4">
+          {RULES.map((rule, i) => (
+            <motion.div
+              key={rule.label}
+              initial={shouldReduce ? false : { opacity: 0, y: 16 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-60px" }}
+              transition={{ duration: 0.55, delay: i * STAGGER_STEP, ease: EASE }}
+              className={`rounded-2xl border p-6 lg:p-7 ${
+                rule.tone === "accent"
+                  ? "border-groovetop-terracotta/25 bg-groovetop-terracotta/[0.05]"
+                  : "border-groovetop-navy/8 bg-groovetop-oat"
+              }`}
+            >
+              <p
+                className={`text-[10px] font-bold tracking-[0.15em] uppercase mb-3 ${
+                  rule.tone === "accent" ? "text-groovetop-terracotta" : "text-groovetop-navy/40"
+                }`}
+              >
+                {rule.label}
+              </p>
+              <p className="text-sm text-groovetop-navy/65 leading-relaxed">{rule.body}</p>
+            </motion.div>
+          ))}
+        </div>
       </div>
     </section>
   );

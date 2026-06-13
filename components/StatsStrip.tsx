@@ -1,51 +1,78 @@
 "use client";
 
 import { motion, useReducedMotion } from "framer-motion";
-import { EASE } from "@/lib/motion";
+import { EASE, STAGGER_STEP } from "@/lib/motion";
 
-function StatItem({ number, label, suffix }: { number: string; label: string; suffix?: string }) {
+type Stat = {
+  number: string;
+  suffix?: string;
+  label: string;
+  context: string;
+  accent: string;
+  feature?: boolean;
+};
+
+const FOUNDATION: Stat[] = [
+  { number: "68", label: "Design Tokens", context: "across 4 collections", accent: "#618FED" },
+  { number: "10", label: "Text Styles", context: "defined type ramp", accent: "#618FED" },
+  { number: "25", suffix: "/28", label: "Semantic Tokens Active", context: "3 not yet surfaced", accent: "#618FED" },
+];
+
+const REUSE: Stat[] = [
+  { number: "5",   label: "Component Sets", context: "real Figma sets", accent: "#C96F53" },
+  { number: "23",  label: "Variants", context: "across 5 sets", accent: "#C96F53" },
+  { number: "9",   label: "Editable Properties", context: "wired across sets", accent: "#C96F53" },
+  { number: "452", label: "Color Token Bindings", context: "applied across all 6 screens", accent: "#C96F53", feature: true },
+  { number: "63",  label: "Text Style Applications", context: "10 styles applied", accent: "#C96F53" },
+  { number: "6",   label: "Token-Connected Screens", context: "390×844px", accent: "#2EAD8C" },
+];
+
+function Tile({ stat, index }: { stat: Stat; index: number }) {
+  const shouldReduce = useReducedMotion();
   return (
-    <div className="flex flex-col gap-1.5">
+    <motion.div
+      initial={shouldReduce ? false : { opacity: 0, y: 22 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: "-60px" }}
+      transition={{ duration: 0.5, delay: (index % 3) * STAGGER_STEP, ease: EASE }}
+      className={`rounded-2xl p-5 lg:p-6 ${
+        stat.feature
+          ? "bg-groovetop-terracotta/12 border-2 border-groovetop-terracotta"
+          : "bg-white/[0.05] border border-white/10"
+      }`}
+    >
       <div className="flex items-baseline gap-1">
-        <span className="text-[clamp(2.25rem,3.6vw,3.25rem)] font-extrabold tracking-tight text-groovetop-navy leading-none tabular-nums">
-          {number}
+        <span
+          className={`font-extrabold leading-none tracking-tight tabular-nums ${
+            stat.feature
+              ? "text-[clamp(2.75rem,5vw,3.75rem)] text-groovetop-terracotta"
+              : "text-[clamp(2rem,3.6vw,3rem)] text-white"
+          }`}
+        >
+          {stat.number}
         </span>
-        {suffix && (
-          <span className="text-base font-bold text-groovetop-navy/40 tabular-nums">{suffix}</span>
+        {stat.suffix && (
+          <span className="text-lg font-bold text-white/40 tabular-nums">{stat.suffix}</span>
         )}
       </div>
-      <span className="text-[11px] font-semibold tracking-[0.08em] text-groovetop-navy/50 uppercase">
-        {label}
-      </span>
-    </div>
+      <p className="mt-3 text-sm font-semibold text-white">{stat.label}</p>
+      <p className="mt-1 text-xs text-white/50 leading-relaxed">{stat.context}</p>
+      {!stat.feature && (
+        <div className="mt-4 h-[3px] w-full rounded-full" style={{ background: stat.accent }} aria-hidden="true" />
+      )}
+    </motion.div>
   );
 }
 
-/* Hairline matrix — vertical + horizontal strokes at 8% navy, desktop only.
-   Anchors the numbers to a regular rhythm without boxing them in. */
-function cellRules(index: number, cols: number): string {
-  const isLeftEdge = index % cols === 0;
-  const isTopRow = index < cols;
-  return [
-    !isLeftEdge ? "lg:border-l lg:border-groovetop-navy/[0.08]" : "",
-    !isTopRow ? "lg:border-t lg:border-groovetop-navy/[0.08]" : "",
-  ].join(" ");
+function GroupLabel({ children, n, total }: { children: React.ReactNode; n: string; total: string }) {
+  return (
+    <div className="flex items-center gap-3 mb-4">
+      <span className="text-[10px] font-bold tracking-[0.2em] uppercase text-groovetop-terracotta">{children}</span>
+      <span className="flex-1 h-px bg-white/10" aria-hidden="true" />
+      <span className="text-[10px] font-semibold tracking-[0.14em] uppercase text-white/35 tabular-nums">{n} / {total}</span>
+    </div>
+  );
 }
-
-const CLUSTER_A = [
-  { number: "68", label: "Design Tokens" },
-  { number: "10", label: "Text Styles" },
-  { number: "25", suffix: "/28", label: "Semantic Tokens Active" },
-];
-
-const CLUSTER_B = [
-  { number: "5",   label: "Component Sets" },
-  { number: "23",  label: "Variants" },
-  { number: "9",   label: "Editable Properties" },
-  { number: "452", label: "Color Bindings" },
-  { number: "63",  label: "Style Apps" },
-  { number: "6",   label: "Connected Screens" },
-];
 
 export default function StatsStrip() {
   const shouldReduce = useReducedMotion();
@@ -53,61 +80,55 @@ export default function StatsStrip() {
   return (
     <section
       aria-labelledby="stats-heading"
-      className="bg-groovetop-oat border-y border-groovetop-navy/8 py-16 lg:py-20"
+      className="bg-groovetop-navy py-section-sm lg:py-section overflow-hidden"
     >
-      <h2 id="stats-heading" className="sr-only">Design system metrics</h2>
-
       <div className="max-w-content mx-auto px-6 lg:px-10">
-        <div className="grid lg:grid-cols-[minmax(0,3fr)_minmax(0,5fr)] gap-12 lg:gap-20">
-
-          {/* Cluster A — System Foundation */}
-          <motion.div
-            initial={shouldReduce ? false : { opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-80px" }}
-            transition={{ duration: 0.6, ease: EASE }}
-          >
-            <p className="text-[10px] font-bold tracking-[0.2em] uppercase text-groovetop-terracotta mb-6">
-              System Foundation
+        <motion.div
+          initial={shouldReduce ? false : { opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6, ease: EASE }}
+          className="mb-12"
+        >
+          <p className="text-[10px] font-bold tracking-[0.2em] uppercase text-groovetop-terracotta mb-4">
+            Design System · Proof Wall
+          </p>
+          <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-4">
+            <h2 id="stats-heading" className="text-display-md font-extrabold tracking-tight text-white">
+              The system, by the numbers
+            </h2>
+            <p className="text-sm text-white/55 max-w-xs leading-relaxed lg:text-right">
+              Not a number strip — an evidence wall. Every tile is a repeatable structure, not just a count.
             </p>
-            <div className="grid grid-cols-3">
-              {CLUSTER_A.map((stat, i) => (
-                <div key={stat.label} className={`py-1 lg:px-5 lg:first:pl-0 ${cellRules(i, 3)}`}>
-                  <StatItem {...stat} />
-                </div>
-              ))}
-            </div>
-          </motion.div>
+          </div>
+        </motion.div>
 
-          {/* Cluster B — Reuse + Application */}
-          <motion.div
-            initial={shouldReduce ? false : { opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-80px" }}
-            transition={{ duration: 0.6, delay: 0.12, ease: EASE }}
-          >
-            <p className="text-[10px] font-bold tracking-[0.2em] uppercase text-groovetop-terracotta mb-6">
-              Reuse &amp; Application
-            </p>
-            <div className="grid grid-cols-2 lg:grid-cols-3 gap-y-8 lg:gap-y-0">
-              {CLUSTER_B.map((stat, i) => (
-                <div key={stat.label} className={`py-1 lg:px-5 lg:py-5 ${cellRules(i, 3)}`}>
-                  <StatItem {...stat} />
-                </div>
-              ))}
-            </div>
-          </motion.div>
+        <div className="mb-12">
+          <GroupLabel n="3" total="3">System Foundation</GroupLabel>
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+            {FOUNDATION.map((stat, i) => (
+              <Tile key={stat.label} stat={stat} index={i} />
+            ))}
+          </div>
         </div>
 
-        {/* Interpretive line */}
+        <div>
+          <GroupLabel n="6" total="6">Reuse &amp; Application</GroupLabel>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+            {REUSE.map((stat, i) => (
+              <Tile key={stat.label} stat={stat} index={i} />
+            ))}
+          </div>
+        </div>
+
         <motion.blockquote
           initial={shouldReduce ? false : { opacity: 0 }}
           whileInView={{ opacity: 1 }}
           viewport={{ once: true, margin: "-60px" }}
-          transition={{ duration: 0.7, delay: 0.25, ease: EASE }}
-          className="mt-16 pt-10 border-t border-groovetop-navy/10 text-center"
+          transition={{ duration: 0.7, delay: 0.2, ease: EASE }}
+          className="mt-14 pt-10 border-t border-white/10 text-center"
         >
-          <p className="text-xl lg:text-2xl font-semibold italic text-groovetop-navy/70 max-w-2xl mx-auto leading-snug text-balance">
+          <p className="text-xl lg:text-2xl font-semibold italic text-white/75 max-w-2xl mx-auto leading-snug text-balance">
             &ldquo;The value is not the count alone — it is the repeatable structure behind the UI.&rdquo;
           </p>
         </motion.blockquote>

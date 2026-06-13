@@ -61,7 +61,7 @@ html {
 body {
   background-color: var(--oat);
   color: var(--navy);
-  font-family: "Plus Jakarta Sans", "DM Sans", Inter, system-ui, sans-serif;
+  font-family: var(--font-jakarta), "Plus Jakarta Sans", "DM Sans", Inter, system-ui, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
@@ -83,19 +83,14 @@ section[id] {
   scroll-margin-top: 96px;
 }
 
-/* Token-flow connector SVG lines */
-.token-line {
-  stroke-dasharray: 100;
-  stroke-dashoffset: 100;
-  transition: stroke-dashoffset 0.7s ease;
-}
-
-.token-line.drawn {
-  stroke-dashoffset: 0;
-}
-
 @layer utilities {
   .text-balance {
     text-wrap: balance;
+  }
+  /* Editorial hairline rule used across v2 section framing */
+  .gt-rule {
+    height: 1px;
+    background: currentColor;
+    opacity: 0.12;
   }
 }

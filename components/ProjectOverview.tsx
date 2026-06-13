@@ -15,16 +15,20 @@ export default function ProjectOverview() {
   const shouldReduce = useReducedMotion();
 
   return (
-    <section
-      id="overview"
-      aria-labelledby="overview-heading"
-      tabIndex={-1}
-      className="py-section bg-white"
-    >
+    <section id="overview" aria-labelledby="overview-heading" tabIndex={-1} className="py-section bg-white">
       <div className="max-w-content mx-auto px-6 lg:px-10">
-        <div className="grid lg:grid-cols-[1fr_400px] gap-16 lg:gap-24 items-start">
+        <motion.div
+          initial={shouldReduce ? false : { opacity: 0, y: 16 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-80px" }}
+          transition={{ duration: 0.5, ease: EASE }}
+          className="flex items-center gap-3 mb-12"
+        >
+          <p className="text-[10px] font-bold tracking-[0.2em] uppercase text-groovetop-terracotta">Project Overview</p>
+          <span className="flex-1 h-px bg-groovetop-navy/10" aria-hidden="true" />
+        </motion.div>
 
-          {/* Left — narrative */}
+        <div className="grid lg:grid-cols-[1fr_400px] gap-16 lg:gap-24 items-start">
           <motion.div
             initial={shouldReduce ? false : { opacity: 0, y: 24 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -32,13 +36,7 @@ export default function ProjectOverview() {
             transition={{ duration: 0.65, ease: EASE }}
             className="space-y-6"
           >
-            <p className="text-[10px] font-bold tracking-[0.2em] uppercase text-groovetop-terracotta">
-              Project Overview
-            </p>
-            <h2
-              id="overview-heading"
-              className="text-[clamp(1.75rem,3vw,2.5rem)] font-extrabold tracking-tight text-groovetop-navy leading-tight"
-            >
+            <h2 id="overview-heading" className="text-display-md font-extrabold tracking-tight text-groovetop-navy leading-tight">
               From academic prototype<br />to documented design system
             </h2>
             <p className="text-base text-groovetop-navy/65 leading-relaxed max-w-xl">
@@ -52,7 +50,6 @@ export default function ProjectOverview() {
             </p>
           </motion.div>
 
-          {/* Right — metadata card */}
           <motion.div
             initial={shouldReduce ? false : { opacity: 0, y: 24 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -61,19 +58,13 @@ export default function ProjectOverview() {
           >
             <div className="rounded-2xl border border-groovetop-navy/8 bg-groovetop-oat overflow-hidden">
               <div className="px-6 py-5 border-b border-groovetop-navy/8">
-                <p className="text-[10px] font-bold tracking-[0.2em] uppercase text-groovetop-navy/40">
-                  Project Brief
-                </p>
+                <p className="text-[10px] font-bold tracking-[0.2em] uppercase text-groovetop-navy/40">Project Brief</p>
               </div>
               <dl className="divide-y divide-groovetop-navy/6">
                 {META.map(({ label, value }) => (
                   <div key={label} className="px-6 py-4 flex flex-col gap-1">
-                    <dt className="text-[10px] font-bold tracking-[0.15em] uppercase text-groovetop-navy/35">
-                      {label}
-                    </dt>
-                    <dd className="text-sm font-medium text-groovetop-navy/75">
-                      {value}
-                    </dd>
+                    <dt className="text-[10px] font-bold tracking-[0.15em] uppercase text-groovetop-navy/35">{label}</dt>
+                    <dd className="text-sm font-medium text-groovetop-navy/75">{value}</dd>
                   </div>
                 ))}
               </dl>

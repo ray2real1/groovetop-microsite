@@ -4,13 +4,52 @@ import Image from "next/image";
 import { motion, useReducedMotion } from "framer-motion";
 import { EASE } from "@/lib/motion";
 
-const CHIPS = [
-  "WGU UX Project",
-  "Excellence Award · May 2026",
-  "Groovetop DS v1",
-  "Mobile UX",
-  "Design Systems",
+const META = [
+  { label: "Role",    value: "UX · Visual · DS creator" },
+  { label: "Context", value: "WGU UX Design project" },
+  { label: "Award",   value: "Excellence Award · May 2026" },
+  { label: "Course",  value: "Prototyping & Iterating II, T2" },
 ];
+
+/* One staged screen in the hero exhibit. The outer motion layer handles the
+   entrance (opacity + y); the inner frame holds the static depth transform so
+   framer-motion and the perspective tilt never fight over `transform`. */
+function StagedScreen({
+  src,
+  alt,
+  positionClass,
+  frameClass,
+  delay,
+  priority = false,
+}: {
+  src: string;
+  alt: string;
+  positionClass: string;
+  frameClass: string;
+  delay: number;
+  priority?: boolean;
+}) {
+  const shouldReduce = useReducedMotion();
+  return (
+    <motion.div
+      className={`absolute ${positionClass}`}
+      initial={shouldReduce ? false : { opacity: 0, y: 28 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.8, delay, ease: EASE }}
+    >
+      <div className={`relative overflow-hidden border border-white/15 bg-groovetop-navy shadow-2xl ${frameClass}`}>
+        <Image
+          src={src}
+          alt={alt}
+          fill
+          className="object-cover object-top"
+          sizes="(max-width: 1024px) 180px, 230px"
+          priority={priority}
+        />
+      </div>
+    </motion.div>
+  );
+}
 
 export default function Hero() {
   const shouldReduce = useReducedMotion();
@@ -28,70 +67,95 @@ export default function Hero() {
     <section
       id="hero"
       aria-labelledby="hero-title"
-      className="relative min-h-screen bg-groovetop-navy flex flex-col justify-center overflow-x-hidden"
+      className="relative min-h-screen bg-groovetop-navy flex items-center overflow-hidden"
     >
-      {/* Subtle radial glow */}
+      {/* Cinematic ambient: off-center blue aurora + floor vignette for depth */}
       <div
         aria-hidden="true"
         className="absolute inset-0 pointer-events-none"
         style={{
           background:
-            "radial-gradient(ellipse 60% 60% at 70% 50%, rgba(99,143,237,0.08) 0%, transparent 70%)",
+            "radial-gradient(ellipse 52% 52% at 76% 32%, rgba(99,143,237,0.20) 0%, transparent 68%)",
         }}
       />
+      <div
+        aria-hidden="true"
+        className="absolute inset-x-0 bottom-0 h-48 pointer-events-none"
+        style={{ background: "linear-gradient(to top, rgba(0,0,0,0.35), transparent)" }}
+      />
+      {/* Editorial frame */}
+      <div
+        aria-hidden="true"
+        className="hidden sm:block absolute inset-4 lg:inset-6 border border-white/10 rounded-2xl pointer-events-none"
+      />
 
-      <div className="max-w-content mx-auto px-6 lg:px-10 w-full py-32 lg:py-0 lg:pt-20 lg:min-h-screen flex items-center">
-        <div className="grid lg:grid-cols-[minmax(0,1fr)_minmax(340px,480px)] gap-16 lg:gap-20 items-center w-full">
+      <div className="relative max-w-content mx-auto px-6 lg:px-10 w-full pt-28 pb-24 lg:py-28">
+        {/* Running editorial index */}
+        <motion.div
+          {...fadeUp(0.05)}
+          className="hidden lg:flex items-center justify-between border-b border-white/10 pb-3 mb-12"
+        >
+          <span className="text-[10px] font-semibold tracking-[0.18em] uppercase text-white/40">
+            § 01 — Hero · Case Study 2026
+          </span>
+          <span className="text-[10px] font-semibold tracking-[0.18em] uppercase text-white/40">
+            Award-recognized UX
+          </span>
+        </motion.div>
 
-          {/* LEFT — copy */}
-          <div className="space-y-8 lg:space-y-10">
-            {/* Eyebrow */}
+        <div className="relative">
+          {/* TITLE STAGE */}
+          <div className="relative z-10 lg:max-w-[58%]">
+            <div className="flex items-start gap-4">
+              {/* Index cue */}
+              <motion.div {...fadeUp(0.1)} className="hidden sm:flex flex-col items-center pt-2">
+                <span className="text-xs font-extrabold text-groovetop-terracotta">01</span>
+                <span
+                  aria-hidden="true"
+                  className="mt-2 w-px h-14"
+                  style={{ background: "linear-gradient(to bottom, #C96F53, transparent)" }}
+                />
+              </motion.div>
+
+              <div>
+                <motion.p
+                  {...fadeUp(0.12)}
+                  className="text-[10px] sm:text-xs font-bold tracking-[0.2em] uppercase text-groovetop-terracotta mb-4"
+                >
+                  WGU Excellence Award Case Study
+                </motion.p>
+                <motion.h1
+                  id="hero-title"
+                  {...fadeUp(0.2)}
+                  className="text-display-2xl font-extrabold text-white text-balance"
+                >
+                  Groovetop<br />Dog&nbsp;App
+                </motion.h1>
+              </div>
+            </div>
+
             <motion.p
-              {...fadeUp(0.1)}
-              className="text-xs font-bold tracking-[0.2em] uppercase text-groovetop-terracotta"
-            >
-              WGU Excellence Award Case Study
-            </motion.p>
-
-            {/* Title */}
-            <motion.h1
-              id="hero-title"
-              {...fadeUp(0.2)}
-              className="text-[clamp(3rem,5.5vw,4.75rem)] font-extrabold leading-[1.02] tracking-[-0.03em] text-white text-balance"
-            >
-              Groovetop<br />Dog App
-            </motion.h1>
-
-            {/* Positioning line */}
-            <motion.p
-              {...fadeUp(0.3)}
-              className="text-base lg:text-lg text-white/60 leading-relaxed max-w-md font-medium"
+              {...fadeUp(0.32)}
+              className="mt-7 text-base lg:text-lg text-white/60 leading-relaxed max-w-md font-medium"
             >
               An award-recognized WGU UX prototype refined into Groovetop DS v1 — a documented design system and scalable mobile app concept study.
             </motion.p>
 
-            {/* Support copy */}
-            <motion.p
-              {...fadeUp(0.38)}
-              className="text-sm text-white/45 leading-relaxed max-w-sm"
+            {/* Metadata credit strip */}
+            <motion.dl
+              {...fadeUp(0.42)}
+              className="mt-8 grid grid-cols-2 gap-x-8 gap-y-3 max-w-md border-t border-white/15 pt-5"
             >
-              A mobile dog adoption experience transformed from an academic prototype into a structured design system with reusable components, semantic tokens, editable properties, and token-connected screens.
-            </motion.p>
-
-            {/* Chips */}
-            <motion.div {...fadeUp(0.45)} className="flex flex-wrap gap-2">
-              {CHIPS.map((chip) => (
-                <span
-                  key={chip}
-                  className="text-[11px] font-semibold tracking-wide px-3 py-1.5 rounded-full border border-white/15 text-white/60 bg-white/5 backdrop-blur-sm"
-                >
-                  {chip}
-                </span>
+              {META.map(({ label, value }) => (
+                <div key={label}>
+                  <dt className="text-[9px] font-semibold tracking-[0.14em] uppercase text-white/40">{label}</dt>
+                  <dd className="text-[11px] font-medium text-white/80 mt-0.5">{value}</dd>
+                </div>
               ))}
-            </motion.div>
+            </motion.dl>
 
-            {/* CTA buttons */}
-            <motion.div {...fadeUp(0.52)} className="flex flex-wrap gap-3">
+            {/* CTAs */}
+            <motion.div {...fadeUp(0.5)} className="mt-8 flex flex-wrap gap-3">
               <a
                 href="/assets/groovetop/Raymond-Merrill-II-Groovetop-Dog-App-UX-Case-Study.pdf"
                 download
@@ -100,7 +164,7 @@ export default function Hero() {
               >
                 Download Case Study PDF
                 <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
-                  <path d="M7 1v8M3 8l4 4 4-4M2 13h10" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                  <path d="M7 1v8M3 8l4 4 4-4M2 13h10" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
                 </svg>
               </a>
               <a
@@ -108,89 +172,62 @@ export default function Hero() {
                 onClick={(e) => {
                   e.preventDefault();
                   const el = document.getElementById("design-system");
-                  if (el) { el.scrollIntoView({ behavior: "smooth" }); }
+                  if (el) el.scrollIntoView({ behavior: shouldReduce ? "auto" : "smooth" });
                 }}
                 className="inline-flex items-center gap-2 px-6 py-3.5 rounded-full border border-white/25 text-white/80 text-sm font-semibold hover:bg-white/10 hover:border-white/40 transition-all duration-200"
               >
                 Jump to Design System
                 <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
-                  <path d="M7 2l5 5-5 5M2 7h10" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                  <path d="M7 2l5 5-5 5M2 7h10" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
                 </svg>
               </a>
             </motion.div>
           </div>
 
-          {/* RIGHT — real screen cluster */}
+          {/* SCREEN EXHIBIT — real Groovetop screens, dimensionally staged */}
           <div
             aria-label="Three Groovetop app screens: Browse Pets, Pet Profile, and Saved Pets"
-            className="relative flex items-center justify-center h-[520px] lg:h-[620px]"
+            className="relative mt-14 lg:mt-0 mx-auto lg:mx-0 w-full max-w-[340px] h-[400px] lg:absolute lg:top-1/2 lg:right-0 lg:-translate-y-1/2 lg:w-[440px] lg:h-[580px] lg:max-w-none"
           >
-            {/* Ambient depth — faint backlight + soft grounding shadow to anchor the cluster */}
+            {/* Backlight + grounding shadow */}
             <div aria-hidden="true" className="absolute inset-0 pointer-events-none">
               <div
-                className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[300px] h-[300px] rounded-full blur-3xl"
-                style={{ background: "radial-gradient(circle, rgba(99,143,237,0.10) 0%, transparent 70%)" }}
+                className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[320px] h-[320px] rounded-full blur-3xl"
+                style={{ background: "radial-gradient(circle, rgba(99,143,237,0.16) 0%, transparent 70%)" }}
               />
               <div
-                className="absolute left-1/2 -translate-x-1/2 bottom-6 w-[260px] h-9 rounded-[50%] blur-2xl"
-                style={{ background: "rgba(0,0,0,0.4)" }}
+                className="absolute left-1/2 -translate-x-1/2 bottom-4 w-[280px] h-10 rounded-[50%] blur-2xl"
+                style={{ background: "rgba(0,0,0,0.45)" }}
               />
             </div>
 
             {/* Behind-left: Browse Pets */}
-            <motion.div
-              className="absolute left-0 top-8 lg:top-12 z-0"
-              initial={shouldReduce ? false : { opacity: 0, y: 30, rotate: -6 }}
-              animate={{ opacity: 0.7, y: 0, rotate: -6 }}
-              transition={{ duration: 0.7, delay: 0.5, ease: EASE }}
-            >
-              <div className="relative w-[180px] h-[320px] lg:w-[200px] lg:h-[360px] rounded-[2.5rem] overflow-hidden shadow-2xl border border-white/10">
-                <Image
-                  src="/assets/groovetop/screens/browse-pets.png"
-                  alt="Browse Pets screen showing Groovetop search, filters, pet cards, and bottom navigation."
-                  fill
-                  className="object-cover object-top"
-                  sizes="200px"
-                />
-              </div>
-            </motion.div>
-
-            {/* Center/front: Pet Profile */}
-            <motion.div
-              className="relative z-20"
-              initial={shouldReduce ? false : { opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.7, delay: 0.35, ease: EASE }}
-            >
-              <div className="relative w-[220px] h-[400px] lg:w-[250px] lg:h-[460px] rounded-[2.5rem] overflow-hidden shadow-2xl border border-white/20">
-                <Image
-                  src="/assets/groovetop/screens/pet-profile.png"
-                  alt="Pet Profile screen for Biscuit with availability, shelter details, adoption fee, and visit CTA."
-                  fill
-                  className="object-cover object-top"
-                  sizes="250px"
-                  priority
-                />
-              </div>
-            </motion.div>
+            <StagedScreen
+              src="/assets/groovetop/screens/browse-pets.png"
+              alt="Browse Pets screen showing Groovetop search, filters, pet cards, and bottom navigation."
+              positionClass="left-0 top-[8%] w-[140px] lg:w-[165px] z-10"
+              frameClass="w-full aspect-[9/19] rounded-[1.75rem] opacity-60 [transform:rotate(-11deg)]"
+              delay={0.55}
+            />
 
             {/* Behind-right: Saved Pets */}
-            <motion.div
-              className="absolute right-0 top-8 lg:top-12 z-0"
-              initial={shouldReduce ? false : { opacity: 0, y: 30, rotate: 6 }}
-              animate={{ opacity: 0.7, y: 0, rotate: 6 }}
-              transition={{ duration: 0.7, delay: 0.5, ease: EASE }}
-            >
-              <div className="relative w-[180px] h-[320px] lg:w-[200px] lg:h-[360px] rounded-[2.5rem] overflow-hidden shadow-2xl border border-white/10">
-                <Image
-                  src="/assets/groovetop/screens/saved-pets.png"
-                  alt="Saved Pets screen showing Biscuit saved as a favorite pet."
-                  fill
-                  className="object-cover object-top"
-                  sizes="200px"
-                />
-              </div>
-            </motion.div>
+            <StagedScreen
+              src="/assets/groovetop/screens/saved-pets.png"
+              alt="Saved Pets screen showing Biscuit saved as a favorite pet."
+              positionClass="right-0 bottom-[6%] w-[140px] lg:w-[165px] z-10"
+              frameClass="w-full aspect-[9/19] rounded-[1.75rem] opacity-60 [transform:rotate(10deg)]"
+              delay={0.6}
+            />
+
+            {/* Center/front: Pet Profile — the hero device */}
+            <StagedScreen
+              src="/assets/groovetop/screens/pet-profile.png"
+              alt="Pet Profile screen for Biscuit with availability, shelter details, adoption fee, and visit CTA."
+              positionClass="left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[190px] lg:w-[220px] z-20"
+              frameClass="w-full aspect-[9/19] rounded-[2.25rem] border-white/25 shadow-[0_34px_64px_rgba(0,0,0,0.55)] lg:[transform:perspective(1200px)_rotateY(-14deg)_rotate(-2deg)]"
+              delay={0.4}
+              priority
+            />
           </div>
         </div>
       </div>
@@ -198,7 +235,7 @@ export default function Hero() {
       {/* Scroll indicator */}
       <motion.div
         aria-hidden="true"
-        className="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2"
+        className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2"
         initial={shouldReduce ? false : { opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 1.2, duration: 0.6 }}

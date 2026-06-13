@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import { motion, useReducedMotion } from "framer-motion";
-import { EASE, STAGGER_STEP } from "@/lib/motion";
+import { EASE } from "@/lib/motion";
 
 const SCREENS = [
   {
@@ -61,60 +61,62 @@ const SCREENS = [
   },
 ];
 
-function ScreenCard({ screen, index }: { screen: typeof SCREENS[0]; index: number }) {
+function Plate({ screen, index }: { screen: typeof SCREENS[0]; index: number }) {
   const shouldReduce = useReducedMotion();
+  const flip = index % 2 === 1;
 
   return (
     <motion.article
-      initial={shouldReduce ? false : { opacity: 0, y: 32 }}
+      initial={shouldReduce ? false : { opacity: 0, y: 36 }}
       whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: "-60px" }}
-      transition={{ duration: 0.6, delay: (index % 3) * STAGGER_STEP, ease: EASE }}
+      viewport={{ once: true, margin: "-80px" }}
+      transition={{ duration: 0.6, ease: EASE }}
       aria-labelledby={`screen-title-${index}`}
-      className="group flex flex-col rounded-2xl overflow-hidden bg-white border border-groovetop-navy/8 hover:shadow-xl hover:shadow-groovetop-navy/5 hover:border-groovetop-navy/12 hover:-translate-y-1 transition-all duration-300"
+      className="grid lg:grid-cols-2 gap-8 lg:gap-16 items-center"
     >
-      {/* Real screen image */}
-      <div className="relative w-full bg-[#FAF7F1] overflow-hidden" style={{ aspectRatio: "390/620" }}>
-        <Image
-          src={screen.src}
-          alt={screen.alt}
-          fill
-          className="object-contain object-top transition-transform duration-500 ease-out group-hover:scale-[1.02]"
-          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-        />
-        {/* Screen number chip */}
+      {/* Screen — full, uncropped */}
+      <div className={`relative ${flip ? "lg:order-2" : ""}`}>
         <span
-          className="absolute top-3 left-3 text-[10px] font-bold tracking-[0.2em] uppercase bg-groovetop-navy text-white px-2.5 py-1 rounded-full z-10"
           aria-hidden="true"
+          className="pointer-events-none absolute -top-6 left-0 text-[clamp(4rem,7vw,7rem)] font-extrabold leading-none text-groovetop-navy/[0.06] select-none"
         >
           {screen.number}
         </span>
+        <div className="relative mx-auto max-w-[300px] rounded-[2rem] border border-groovetop-navy/10 bg-white p-3 shadow-xl shadow-groovetop-navy/5">
+          <div className="relative w-full overflow-hidden rounded-[1.4rem] bg-groovetop-oat" style={{ aspectRatio: "390 / 844" }}>
+            <Image
+              src={screen.src}
+              alt={screen.alt}
+              fill
+              className="object-contain object-top"
+              sizes="(max-width: 1024px) 100vw, 300px"
+            />
+          </div>
+        </div>
       </div>
 
-      {/* Card content */}
-      <div className="p-6 space-y-4 flex-1 flex flex-col">
-        <div>
-          <h3
-            id={`screen-title-${index}`}
-            className="text-base font-bold text-groovetop-navy mb-1"
-          >
-            {screen.title}
-          </h3>
-          <p className="text-sm text-groovetop-navy/60 leading-relaxed">{screen.purpose}</p>
+      {/* Caption */}
+      <div className={flip ? "lg:order-1" : ""}>
+        <div className="flex items-center gap-3 mb-4">
+          <span className="text-[11px] font-bold tracking-[0.18em] uppercase text-groovetop-terracotta tabular-nums">
+            Step {screen.number} · 06
+          </span>
+          <span className="flex-1 h-px bg-groovetop-navy/10" aria-hidden="true" />
         </div>
 
-        <div className="space-y-3 flex-1">
-          <div>
-            <p className="text-[9px] font-bold tracking-[0.15em] uppercase text-groovetop-navy/35 mb-1">
-              Key UX Decision
-            </p>
-            <p className="text-xs text-groovetop-navy/55 leading-relaxed">{screen.uxDecision}</p>
+        <h3 id={`screen-title-${index}`} className="text-display-md font-extrabold tracking-tight text-groovetop-navy mb-3">
+          {screen.title}
+        </h3>
+        <p className="text-base text-groovetop-navy/65 leading-relaxed max-w-md mb-6">{screen.purpose}</p>
+
+        <div className="space-y-4 max-w-md">
+          <div className="border-l-2 border-groovetop-navy/15 pl-4">
+            <p className="text-[9px] font-bold tracking-[0.15em] uppercase text-groovetop-navy/40 mb-1.5">Key UX Decision</p>
+            <p className="text-sm text-groovetop-navy/60 leading-relaxed">{screen.uxDecision}</p>
           </div>
-          <div className="p-3 rounded-xl bg-groovetop-oat border border-groovetop-navy/6">
-            <p className="text-[9px] font-bold tracking-[0.15em] uppercase text-groovetop-terracotta mb-1">
-              Design System Implementation
-            </p>
-            <p className="text-xs text-groovetop-navy/55 leading-relaxed">{screen.systemNote}</p>
+          <div className="rounded-xl bg-white border border-groovetop-navy/8 p-4">
+            <p className="text-[9px] font-bold tracking-[0.15em] uppercase text-groovetop-terracotta mb-1.5">Design System Implementation</p>
+            <p className="text-sm text-groovetop-navy/60 leading-relaxed">{screen.systemNote}</p>
           </div>
         </div>
       </div>
@@ -132,7 +134,7 @@ export default function ScreenGallery() {
     >
       <div className="max-w-content mx-auto px-6 lg:px-10">
         <motion.div
-          className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-4 mb-12"
+          className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-4 mb-16"
           initial={{ opacity: 0, y: 16 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
@@ -140,13 +142,10 @@ export default function ScreenGallery() {
         >
           <div>
             <p className="text-[10px] font-bold tracking-[0.2em] uppercase text-groovetop-terracotta mb-3">
-              Six Screens
+              Six Screens · Product Walkthrough
             </p>
-            <h2
-              id="screens-heading"
-              className="text-[clamp(1.75rem,3vw,2.5rem)] font-extrabold tracking-tight text-groovetop-navy"
-            >
-              The adoption experience
+            <h2 id="screens-heading" className="text-display-lg font-extrabold tracking-tight text-groovetop-navy">
+              The adoption experience, screen by screen
             </h2>
           </div>
           <p className="text-sm text-groovetop-navy/45 max-w-xs leading-relaxed">
@@ -154,9 +153,9 @@ export default function ScreenGallery() {
           </p>
         </motion.div>
 
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="space-y-20 lg:space-y-28">
           {SCREENS.map((screen, i) => (
-            <ScreenCard key={screen.title} screen={screen} index={i} />
+            <Plate key={screen.title} screen={screen} index={i} />
           ))}
         </div>
       </div>

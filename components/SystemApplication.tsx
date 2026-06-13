@@ -3,100 +3,84 @@
 import { motion, useReducedMotion } from "framer-motion";
 import { EASE, STAGGER_STEP } from "@/lib/motion";
 
-const PROOF_CARDS = [
-  {
-    number: "452",
-    label:  "Color Token Bindings",
-    note:   "Applied across all 6 original screens",
-    color:  "text-groovetop-terracotta",
-  },
-  {
-    number: "63",
-    label:  "Text Style Applications",
-    note:   "10 text styles, 63 applied instances",
-    color:  "text-groovetop-blue",
-  },
-  {
-    number: "25/28",
-    label:  "Semantic Tokens Referenced",
-    note:   "3 defined but not yet surfaced in current screens",
-    color:  "text-groovetop-green",
-  },
-  {
-    number: "6",
-    label:  "Token-Connected Screens",
-    note:   "390×844px · visual identity preserved throughout",
-    color:  "text-white/70",
-  },
+const LEDGER = [
+  { number: "452",   label: "Color token bindings", note: "applied across all 6 original screens", color: "text-groovetop-terracotta" },
+  { number: "63",    label: "Text style applications", note: "10 text styles, 63 applied instances", color: "text-groovetop-blue" },
+  { number: "25/28", label: "Semantic tokens referenced", note: "3 defined but not yet surfaced", color: "text-groovetop-green" },
+  { number: "6",     label: "Token-connected screens", note: "390×844px · visual identity preserved", color: "text-white" },
 ];
 
 export default function SystemApplication() {
   const shouldReduce = useReducedMotion();
 
   return (
-    <section
-      aria-labelledby="system-application-heading"
-      className="py-section bg-groovetop-navy"
-    >
+    <section aria-labelledby="system-application-heading" className="py-section bg-groovetop-navy overflow-hidden">
       <div className="max-w-content mx-auto px-6 lg:px-10">
         <motion.div
           initial={shouldReduce ? false : { opacity: 0, y: 24 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6, ease: EASE }}
-          className="mb-14"
+          className="mb-12"
         >
           <p className="text-[10px] font-bold tracking-[0.2em] uppercase text-groovetop-terracotta mb-4">
             System Application
           </p>
-          <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-4">
-            <h2
-              id="system-application-heading"
-              className="text-[clamp(1.75rem,3vw,2.5rem)] font-extrabold tracking-tight text-white"
-            >
-              Applied back to every screen
-            </h2>
-            <p className="text-sm text-white/60 max-w-sm leading-relaxed lg:text-right">
-              Token consistency and visual preservation were prioritized. Component replacement was not forced where it would compromise layout fidelity.
+          <h2 id="system-application-heading" className="text-display-lg font-extrabold tracking-tight text-white max-w-2xl">
+            The system, applied back to the product
+          </h2>
+        </motion.div>
+
+        <div className="grid lg:grid-cols-[1.1fr_0.9fr] gap-12 lg:gap-16 items-start">
+          {/* Narrative */}
+          <motion.div
+            initial={shouldReduce ? false : { opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, ease: EASE }}
+            className="space-y-5"
+          >
+            <p className="text-lg text-white/75 leading-relaxed">
+              After building Groovetop DS v1, the system was applied back to the original six screens — not bolted on for show. Token consistency and visual preservation were prioritized; component replacement was never forced where it would compromise layout fidelity.
             </p>
-          </div>
-        </motion.div>
+            <p className="text-sm text-white/55 leading-relaxed">
+              Groovetop DS v1 was created after the Excellence Award to systematize the existing visual direction — not replace it. It was extracted directly from the prototype screens and structured into reusable tokens, styles, and components without introducing new visual language.
+            </p>
+            <div className="flex items-center gap-3 pt-2">
+              <span className="text-[10px] font-bold tracking-[0.15em] uppercase text-groovetop-terracotta">Result</span>
+              <span className="flex-1 h-px bg-white/10" aria-hidden="true" />
+              <span className="text-sm font-semibold text-white/70">Every screen now resolves to the system.</span>
+            </div>
+          </motion.div>
 
-        {/* Proof cards */}
-        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-12">
-          {PROOF_CARDS.map((card, i) => (
-            <motion.div
-              key={card.label}
-              initial={shouldReduce ? false : { opacity: 0, y: 28 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-60px" }}
-              transition={{ duration: 0.55, delay: i * STAGGER_STEP, ease: EASE }}
-              className="rounded-2xl border border-white/8 bg-white/5 backdrop-blur-sm p-6 space-y-2"
-            >
-              <p className={`text-[clamp(2rem,4vw,2.5rem)] font-extrabold leading-none tracking-tight ${card.color}`}>
-                {card.number}
-              </p>
-              <p className="text-sm font-semibold text-white">{card.label}</p>
-              <p className="text-xs text-white/60 leading-relaxed">{card.note}</p>
-            </motion.div>
-          ))}
+          {/* Ledger */}
+          <motion.dl
+            initial={shouldReduce ? false : { opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, delay: 0.15, ease: EASE }}
+            className="rounded-2xl border border-white/10 bg-white/[0.04] divide-y divide-white/10 overflow-hidden"
+          >
+            {LEDGER.map((row, i) => (
+              <motion.div
+                key={row.label}
+                initial={shouldReduce ? false : { opacity: 0, x: -16 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true, margin: "-40px" }}
+                transition={{ duration: 0.5, delay: i * STAGGER_STEP, ease: EASE }}
+                className="flex items-baseline gap-5 px-6 py-5"
+              >
+                <dd className={`text-[clamp(1.75rem,3vw,2.5rem)] font-extrabold leading-none tracking-tight tabular-nums w-28 flex-shrink-0 ${row.color}`}>
+                  {row.number}
+                </dd>
+                <div>
+                  <dt className="text-sm font-semibold text-white">{row.label}</dt>
+                  <p className="text-xs text-white/55 leading-relaxed mt-0.5">{row.note}</p>
+                </div>
+              </motion.div>
+            ))}
+          </motion.dl>
         </div>
-
-        {/* Body copy */}
-        <motion.div
-          initial={shouldReduce ? false : { opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6, delay: 0.2, ease: EASE }}
-          className="rounded-2xl border border-white/8 bg-white/5 p-8 max-w-3xl"
-        >
-          <p className="text-base text-white/65 leading-relaxed">
-            After building Groovetop DS v1, the system was applied back to the original six screens. Component replacement was not forced where it would damage layout fidelity; token consistency and visual preservation were prioritized.
-          </p>
-          <p className="text-sm text-white/55 leading-relaxed mt-4">
-            Groovetop DS v1 was created after the Excellence Award to systematize the existing visual direction — not replace it. Extracted directly from the prototype screens and structured into reusable tokens, styles, and components without introducing new visual language.
-          </p>
-        </motion.div>
       </div>
     </section>
   );
