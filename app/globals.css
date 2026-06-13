@@ -1,0 +1,70 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --navy:       #1B2A4A;
+  --terracotta: #C96F53;
+  --oat:        #FAF7F1;
+  --white:      #FFFFFF;
+  --green:      #2EAD8C;
+  --blue:       #618FED;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  background-color: var(--oat);
+  color: var(--navy);
+  font-family: "Plus Jakarta Sans", "DM Sans", Inter, system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+::selection {
+  background-color: #C96F5330;
+  color: var(--navy);
+}
+
+/* Focus ring — visible for keyboard users */
+:focus-visible {
+  outline: 2px solid var(--blue);
+  outline-offset: 3px;
+  border-radius: 3px;
+}
+
+/* Smooth section anchors — 96px gives 24px clearance below the 72px sticky nav */
+section[id] {
+  scroll-margin-top: 96px;
+}
+
+/* Token-flow connector SVG lines */
+.token-line {
+  stroke-dasharray: 100;
+  stroke-dashoffset: 100;
+  transition: stroke-dashoffset 0.7s ease;
+}
+
+.token-line.drawn {
+  stroke-dashoffset: 0;
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+}
