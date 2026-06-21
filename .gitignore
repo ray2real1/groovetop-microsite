@@ -18,3 +18,8 @@ Thumbs.db
 .vscode/
 .idea/
 .vercel
+
+# Local AI/tooling workspace
+.claude/settings.local.json
+.claude/skills/
+.impeccable/
