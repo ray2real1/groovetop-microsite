@@ -23,3 +23,6 @@ Thumbs.db
 .claude/settings.local.json
 .claude/skills/
 .impeccable/
+.agents/
+skills-lock.json
+tsconfig.tsbuildinfo
