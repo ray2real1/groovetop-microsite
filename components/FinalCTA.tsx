@@ -102,7 +102,7 @@ export default function FinalCTA() {
             <p className="text-[10px] font-bold tracking-[0.15em] uppercase text-groovetop-navy/40 mb-4">What it does not prove</p>
             <ul className="space-y-2.5">
               {NOT_PROVES.map((item) => (
-                <li key={item} className="flex items-start gap-2.5 text-sm text-groovetop-navy/65 leading-snug">
+                <li key={item} className="flex items-start gap-2.5 text-sm text-groovetop-navy/75 leading-snug">
                   <span className="mt-2 h-px w-3 flex-shrink-0 bg-groovetop-navy/40" aria-hidden="true" />
                   {item}
                 </li>

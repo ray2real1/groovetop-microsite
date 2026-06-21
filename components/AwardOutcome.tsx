@@ -45,10 +45,10 @@ export default function AwardOutcome() {
             </h2>
 
             <div className="space-y-4">
-              <p className="text-base text-groovetop-navy/65 leading-relaxed max-w-xl">
+              <p className="text-base text-groovetop-navy/75 leading-relaxed max-w-xl">
                 This WGU UX Design mobile app assignment received a WGU Excellence Award in May 2026 for exemplary work in Prototyping and Iterating II, Task 2. The certificate was signed by Kirk A. Welter, Vice President, Evaluation Operations.
               </p>
-              <p className="text-sm text-groovetop-navy/60 leading-relaxed max-w-xl border-l-2 border-groovetop-terracotta/40 pl-5">
+              <p className="text-sm text-groovetop-navy/60 leading-relaxed max-w-xl rounded-xl bg-white border border-groovetop-navy/8 px-5 py-4">
                 The award recognized the quality of the original prototype. The subsequent design system work — Groovetop DS v1 — was a self-directed refinement, not part of the original assignment evaluation.
               </p>
             </div>

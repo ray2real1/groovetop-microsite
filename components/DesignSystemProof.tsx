@@ -93,7 +93,7 @@ function UIChipMobile({ row }: { row: Row }) {
   if (row.ui === "block")
     return <div className="w-full rounded-xl py-2.5 text-center text-[11px] font-medium uppercase tracking-widest text-white/50" style={{ background: "#1B2A4A", border: "1px solid rgba(255,255,255,0.25)" }}>Hero canvas</div>;
   return (
-    <div className="w-full rounded-xl py-2.5 text-center text-[11px] font-semibold uppercase tracking-widest" style={{ background: row.hex, color: "#1B2A4A", border: "1px solid rgba(0,0,0,0.08)" }}>
+    <div className="w-full rounded-xl py-2.5 text-center text-[11px] font-semibold uppercase tracking-widest border border-groovetop-navy/8" style={{ background: row.hex, color: "#1B2A4A" }}>
       {row.ui === "surface" ? "Page surface" : "Content card"}
     </div>
   );
@@ -198,7 +198,7 @@ export default function DesignSystemProof() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.55, ease: EASE }}
-          className="mb-10 border-l-2 border-groovetop-terracotta/50 pl-5"
+          className="mb-10"
         >
           <p className="text-sm text-white/65 leading-relaxed max-w-3xl">
             Groovetop DS v1 applies strict variable-mapping logic: global primitives hold the raw visual values, while semantic tokens are named by <span className="font-semibold text-white">role destination</span> — <span className="font-mono text-[0.8em] text-white/85">color.background.hero</span>, <span className="font-mono text-[0.8em] text-white/85">color.cta.primary</span> — so the system reads as intent, not hex codes, and translates cleanly into handoff and front-end code.

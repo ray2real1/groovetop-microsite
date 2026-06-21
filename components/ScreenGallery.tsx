@@ -107,10 +107,10 @@ function Plate({ screen, index }: { screen: typeof SCREENS[0]; index: number }) 
         <h3 id={`screen-title-${index}`} className="text-display-md font-extrabold tracking-tight text-groovetop-navy mb-3">
           {screen.title}
         </h3>
-        <p className="text-base text-groovetop-navy/65 leading-relaxed max-w-md mb-6">{screen.purpose}</p>
+        <p className="text-base text-groovetop-navy/75 leading-relaxed max-w-md mb-6">{screen.purpose}</p>
 
         <div className="space-y-4 max-w-md">
-          <div className="border-l-2 border-groovetop-navy/15 pl-4">
+          <div className="rounded-xl bg-white border border-groovetop-navy/8 p-4">
             <p className="text-[9px] font-bold tracking-[0.15em] uppercase text-groovetop-navy/40 mb-1.5">Key UX Decision</p>
             <p className="text-sm text-groovetop-navy/60 leading-relaxed">{screen.uxDecision}</p>
           </div>

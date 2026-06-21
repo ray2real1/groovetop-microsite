@@ -127,7 +127,7 @@ export default function ComponentSystem() {
   const shouldReduce = useReducedMotion();
 
   return (
-    <section aria-labelledby="components-heading" className="py-section bg-white">
+    <section id="components" aria-labelledby="components-heading" tabIndex={-1} className="py-section bg-white">
       <div className="max-w-content mx-auto px-6 lg:px-10">
         <motion.div
           initial={shouldReduce ? false : { opacity: 0, y: 20 }}
@@ -217,7 +217,7 @@ export default function ComponentSystem() {
               >
                 {rule.label}
               </p>
-              <p className="text-sm text-groovetop-navy/65 leading-relaxed">{rule.body}</p>
+              <p className="text-sm text-groovetop-navy/75 leading-relaxed">{rule.body}</p>
             </motion.div>
           ))}
         </div>

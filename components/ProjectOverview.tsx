@@ -39,13 +39,13 @@ export default function ProjectOverview() {
             <h2 id="overview-heading" className="text-display-md font-extrabold tracking-tight text-groovetop-navy leading-tight">
               From academic prototype<br />to documented design system
             </h2>
-            <p className="text-base text-groovetop-navy/65 leading-relaxed max-w-xl">
+            <p className="text-base text-groovetop-navy/75 leading-relaxed max-w-xl">
               Groovetop began as a WGU UX Design mobile app assignment for a dog adoption experience. After receiving a WGU Excellence Award, the project was refined into Groovetop DS v1 — a documented system with semantic tokens, typography styles, reusable component sets, editable properties, and token-connected screens.
             </p>
-            <p className="text-sm text-groovetop-navy/65 leading-relaxed max-w-xl">
+            <p className="text-sm text-groovetop-navy/75 leading-relaxed max-w-xl">
               The design system was extracted directly from the existing prototype screens. No new visual language was introduced — only structure, repeatability, and handoff clarity.
             </p>
-            <p className="text-base font-medium text-groovetop-navy/80 leading-relaxed max-w-xl border-l-2 border-groovetop-terracotta/40 pl-5">
+            <p className="text-base font-medium text-groovetop-navy/80 leading-relaxed max-w-xl rounded-xl bg-groovetop-oat border border-groovetop-navy/8 px-5 py-4">
               Worth a recruiter&rsquo;s attention because it shows the move from attractive screens to a documented, reusable system — without overstating the original academic scope.
             </p>
           </motion.div>

@@ -23,7 +23,7 @@ export default function AccessibilityNotes() {
   const shouldReduce = useReducedMotion();
 
   return (
-    <section aria-labelledby="a11y-heading" className="py-section bg-white">
+    <section id="accessibility" aria-labelledby="a11y-heading" tabIndex={-1} className="py-section bg-white">
       <div className="max-w-content mx-auto px-6 lg:px-10">
         <motion.div
           initial={shouldReduce ? false : { opacity: 0, y: 20 }}
