@@ -26,15 +26,12 @@ export default function PostAwardTimeline() {
           transition={{ duration: 0.55, ease: EASE }}
           className="mb-14"
         >
-          <p className="text-[10px] font-bold tracking-[0.2em] uppercase text-groovetop-terracotta mb-4">
-            Post-Award Refinement
-          </p>
           <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-4">
             <h2 id="timeline-heading" className="text-display-md font-extrabold tracking-tight text-groovetop-navy">
               From award recognition to documented system
             </h2>
             <p className="text-sm text-groovetop-navy/60 max-w-xs leading-relaxed">
-              Self-directed refinement beyond the assignment scope — craft, systems thinking, and professional initiative.
+              Self-directed refinement beyond the assignment scope: craft, systems thinking, and professional initiative.
             </p>
           </div>
         </motion.div>

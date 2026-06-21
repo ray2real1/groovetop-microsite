@@ -5,7 +5,7 @@ import { motion, useReducedMotion } from "framer-motion";
 import { EASE } from "@/lib/motion";
 
 const META = [
-  { label: "Role",    value: "UX · Visual · DS creator" },
+  { label: "Role",    value: "UX, Visual, DS creator" },
   { label: "Context", value: "WGU UX Design project" },
   { label: "Award",   value: "Excellence Award · May 2026" },
   { label: "Course",  value: "Prototyping & Iterating II, T2" },
@@ -67,7 +67,7 @@ export default function Hero() {
     <section
       id="hero"
       aria-labelledby="hero-title"
-      className="relative min-h-screen bg-groovetop-navy flex items-center overflow-hidden"
+      className="relative min-h-[100dvh] bg-groovetop-navy flex items-center overflow-hidden"
     >
       {/* Cinematic ambient: off-center blue aurora + floor vignette for depth */}
       <div
@@ -90,55 +90,28 @@ export default function Hero() {
       />
 
       <div className="relative max-w-content mx-auto px-6 lg:px-10 w-full pt-28 pb-24 lg:py-28">
-        {/* Running editorial index */}
-        <motion.div
-          {...fadeUp(0.05)}
-          className="hidden lg:flex items-center justify-between border-b border-white/10 pb-3 mb-12"
-        >
-          <span className="text-[10px] font-semibold tracking-[0.18em] uppercase text-white/40">
-            § 01 — Hero · Case Study 2026
-          </span>
-          <span className="text-[10px] font-semibold tracking-[0.18em] uppercase text-white/40">
-            Award-recognized UX
-          </span>
-        </motion.div>
-
         <div className="relative">
           {/* TITLE STAGE */}
           <div className="relative z-10 lg:max-w-[58%]">
-            <div className="flex items-start gap-4">
-              {/* Index cue */}
-              <motion.div {...fadeUp(0.1)} className="hidden sm:flex flex-col items-center pt-2">
-                <span className="text-xs font-extrabold text-groovetop-terracotta">01</span>
-                <span
-                  aria-hidden="true"
-                  className="mt-2 w-px h-14"
-                  style={{ background: "linear-gradient(to bottom, #C96F53, transparent)" }}
-                />
-              </motion.div>
-
-              <div>
-                <motion.p
-                  {...fadeUp(0.12)}
-                  className="text-[10px] sm:text-xs font-bold tracking-[0.2em] uppercase text-groovetop-terracotta mb-4"
-                >
-                  WGU Excellence Award Case Study
-                </motion.p>
-                <motion.h1
-                  id="hero-title"
-                  {...fadeUp(0.2)}
-                  className="text-display-2xl font-extrabold text-white text-balance"
-                >
-                  Groovetop<br />Dog&nbsp;App
-                </motion.h1>
-              </div>
-            </div>
+            <motion.p
+              {...fadeUp(0.12)}
+              className="text-[10px] sm:text-xs font-bold tracking-[0.2em] uppercase text-groovetop-terracotta mb-4"
+            >
+              WGU Excellence Award Case Study
+            </motion.p>
+            <motion.h1
+              id="hero-title"
+              {...fadeUp(0.2)}
+              className="text-display-2xl font-extrabold text-white text-balance"
+            >
+              Groovetop<br />Dog&nbsp;App
+            </motion.h1>
 
             <motion.p
               {...fadeUp(0.32)}
               className="mt-7 text-base lg:text-lg text-white/60 leading-relaxed max-w-md font-medium"
             >
-              An award-recognized WGU UX prototype refined into Groovetop DS v1 — a documented design system and scalable mobile app concept study.
+              An award-recognized WGU UX prototype refined into Groovetop DS v1, a documented design system and scalable mobile app concept study.
             </motion.p>
 
             {/* Metadata credit strip */}
@@ -231,22 +204,6 @@ export default function Hero() {
           </div>
         </div>
       </div>
-
-      {/* Scroll indicator */}
-      <motion.div
-        aria-hidden="true"
-        className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2"
-        initial={shouldReduce ? false : { opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 1.2, duration: 0.6 }}
-      >
-        <span className="text-[10px] tracking-[0.2em] uppercase text-white/30 font-medium">Scroll</span>
-        <motion.div
-          className="w-px h-8 bg-gradient-to-b from-white/20 to-transparent"
-          animate={shouldReduce ? {} : { scaleY: [1, 1.3, 1], opacity: [0.4, 0.8, 0.4] }}
-          transition={{ repeat: Infinity, duration: 2, ease: "easeInOut" }}
-        />
-      </motion.div>
     </section>
   );
 }

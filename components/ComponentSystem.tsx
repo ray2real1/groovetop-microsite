@@ -6,7 +6,7 @@ import { EASE, STAGGER_STEP } from "@/lib/motion";
 const COMPONENTS = [
   {
     name: "Button",
-    purpose: "Primary CTAs — Adopt, Schedule, Contact",
+    purpose: "Primary CTAs: Adopt, Schedule, Contact",
     props: [
       { axis: "Style",  values: ["Primary", "Secondary", "Ghost"] },
       { axis: "Size",   values: ["Large", "Medium", "Small"] },
@@ -119,7 +119,7 @@ const RULES = [
   {
     label: "Local by design",
     tone: "muted",
-    body: "Viewport layout containers stay local where needed to preserve spacing fidelity. Reuse is applied where it compounds — not forced where it would add system complexity without payoff.",
+    body: "Viewport layout containers stay local where needed to preserve spacing fidelity. Reuse is applied where it compounds, not forced where it would add system complexity without payoff.",
   },
 ];
 
@@ -136,9 +136,6 @@ export default function ComponentSystem() {
           transition={{ duration: 0.55, ease: EASE }}
           className="mb-12"
         >
-          <p className="text-[10px] font-bold tracking-[0.2em] uppercase text-groovetop-terracotta mb-4">
-            Component System Structure
-          </p>
           <div className="flex flex-col lg:flex-row lg:items-start lg:justify-between gap-4">
             <h2 id="components-heading" className="text-display-md font-extrabold tracking-tight text-groovetop-navy leading-[1.1]">
               5 component sets.<br />23 variants. 9 editable properties.

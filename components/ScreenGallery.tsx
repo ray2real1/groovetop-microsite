@@ -10,7 +10,7 @@ const SCREENS = [
     title: "Browse Pets",
     src:   "/assets/groovetop/screens/browse-pets.png",
     alt:   "Browse Pets screen showing Groovetop search, filters, pet cards, and bottom navigation.",
-    purpose: "Entry point for discovery — users scan available dogs at a glance.",
+    purpose: "Entry point for discovery. Users scan available dogs at a glance.",
     uxDecision: "Led with a scannable card list over a dense table so availability reads in a single pass, not a sequence of taps.",
     systemNote: "Pet Card, Badge, and Search Bar components render here; Bottom Nav holds Browse as the active state.",
   },
@@ -19,7 +19,7 @@ const SCREENS = [
     title: "Pet Profile",
     src:   "/assets/groovetop/screens/pet-profile.png",
     alt:   "Pet Profile screen for Biscuit with availability, shelter details, adoption fee, and visit CTA.",
-    purpose: "Full detail view — name, breed, age, characteristics, and primary CTA.",
+    purpose: "Full detail view: name, breed, age, characteristics, and primary CTA.",
     uxDecision: "Prioritized pet details and shelter context above the visit CTA to reduce decision friction before asking for commitment.",
     systemNote: "Uses color.cta.primary, color.surface.card, and status-badge semantics to hold hierarchy and action clarity.",
   },
@@ -37,7 +37,7 @@ const SCREENS = [
     title: "Confirmation",
     src:   "/assets/groovetop/screens/confirmation.png",
     alt:   "Visit Confirmation screen showing confirmed visit details for Biscuit.",
-    purpose: "Positive reinforcement — visit booked, next steps surfaced.",
+    purpose: "Positive reinforcement: visit booked, next steps surfaced.",
     uxDecision: "Closed the loop with a single, unambiguous success state and explicit next steps so the flow never dead-ends.",
     systemNote: "color.brand.primary drives the confirmation marker; the Button component handles both next-step actions.",
   },
@@ -46,7 +46,7 @@ const SCREENS = [
     title: "Preferences",
     src:   "/assets/groovetop/screens/preferences.png",
     alt:   "Preferences screen showing pet type, age range, living situation, and adoption notes.",
-    purpose: "User-controlled filtering — breed, size, energy level, and more.",
+    purpose: "User-controlled filtering: breed, size, energy level, and more.",
     uxDecision: "Chose chip-based selection over nested menus so criteria stay scannable, reversible, and low-commitment.",
     systemNote: "Interactive background tokens style chip selection; the grid follows the shared spacing scale.",
   },
@@ -55,7 +55,7 @@ const SCREENS = [
     title: "Saved Pets",
     src:   "/assets/groovetop/screens/saved-pets.png",
     alt:   "Saved Pets screen showing Biscuit saved as a favorite pet.",
-    purpose: "Saved dog list — lets users return to bookmarked pets and continue their decision at any time.",
+    purpose: "Saved dog list, letting users return to bookmarked pets and continue their decision at any time.",
     uxDecision: "Kept Saved one tap away in the Bottom Nav so users can park a decision and return without losing context.",
     systemNote: "Pet Card 'Saved' variant is reused throughout; Bottom Nav holds Saved as the active state.",
   },
@@ -97,13 +97,6 @@ function Plate({ screen, index }: { screen: typeof SCREENS[0]; index: number }) 
 
       {/* Caption */}
       <div className={flip ? "lg:order-1" : ""}>
-        <div className="flex items-center gap-3 mb-4">
-          <span className="text-[11px] font-bold tracking-[0.18em] uppercase text-groovetop-terracotta tabular-nums">
-            Step {screen.number} · 06
-          </span>
-          <span className="flex-1 h-px bg-groovetop-navy/10" aria-hidden="true" />
-        </div>
-
         <h3 id={`screen-title-${index}`} className="text-display-md font-extrabold tracking-tight text-groovetop-navy mb-3">
           {screen.title}
         </h3>
@@ -142,7 +135,7 @@ export default function ScreenGallery() {
         >
           <div>
             <p className="text-[10px] font-bold tracking-[0.2em] uppercase text-groovetop-terracotta mb-3">
-              Six Screens · Product Walkthrough
+              Six Screens
             </p>
             <h2 id="screens-heading" className="text-display-lg font-extrabold tracking-tight text-groovetop-navy">
               The adoption experience, screen by screen

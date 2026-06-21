@@ -7,7 +7,7 @@ const LEDGER = [
   { number: "452",   label: "Color token bindings", note: "applied across all 6 original screens", color: "text-groovetop-terracotta" },
   { number: "63",    label: "Text style applications", note: "10 text styles, 63 applied instances", color: "text-groovetop-blue" },
   { number: "25/28", label: "Semantic tokens referenced", note: "3 defined but not yet surfaced", color: "text-groovetop-green" },
-  { number: "6",     label: "Token-connected screens", note: "390×844px · visual identity preserved", color: "text-white" },
+  { number: "6",     label: "Token-connected screens", note: "390×844px, visual identity preserved", color: "text-white" },
 ];
 
 export default function SystemApplication() {
@@ -23,9 +23,7 @@ export default function SystemApplication() {
           transition={{ duration: 0.6, ease: EASE }}
           className="mb-12"
         >
-          <p className="text-[10px] font-bold tracking-[0.2em] uppercase text-groovetop-terracotta mb-4">
-            System Application
-          </p>
+          <span className="block w-10 h-1 rounded-full bg-groovetop-terracotta mb-5" aria-hidden="true" />
           <h2 id="system-application-heading" className="text-display-lg font-extrabold tracking-tight text-white max-w-2xl">
             The system, applied back to the product
           </h2>
@@ -41,10 +39,10 @@ export default function SystemApplication() {
             className="space-y-5"
           >
             <p className="text-lg text-white/75 leading-relaxed">
-              After building Groovetop DS v1, the system was applied back to the original six screens — not bolted on for show. Token consistency and visual preservation were prioritized; component replacement was never forced where it would compromise layout fidelity.
+              After building Groovetop DS v1, the system was applied back to the original six screens, not bolted on for show. Token consistency and visual preservation were prioritized; component replacement was never forced where it would compromise layout fidelity.
             </p>
             <p className="text-sm text-white/55 leading-relaxed">
-              Groovetop DS v1 was created after the Excellence Award to systematize the existing visual direction — not replace it. It was extracted directly from the prototype screens and structured into reusable tokens, styles, and components without introducing new visual language.
+              Groovetop DS v1 was created after the Excellence Award to systematize the existing visual direction, not replace it. It was extracted directly from the prototype screens and structured into reusable tokens, styles, and components without introducing new visual language.
             </p>
             <div className="flex items-center gap-3 pt-2">
               <span className="text-[10px] font-bold tracking-[0.15em] uppercase text-groovetop-terracotta">Result</span>

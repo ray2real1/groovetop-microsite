@@ -18,17 +18,6 @@ export default function VisualDirection() {
   return (
     <section aria-labelledby="visual-direction-heading" className="py-section bg-white">
       <div className="max-w-content mx-auto px-6 lg:px-10">
-        <motion.div
-          initial={shouldReduce ? false : { opacity: 0, y: 16 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-80px" }}
-          transition={{ duration: 0.5, ease: EASE }}
-          className="flex items-center gap-3 mb-12"
-        >
-          <p className="text-[10px] font-bold tracking-[0.2em] uppercase text-groovetop-terracotta">Visual Direction</p>
-          <span className="flex-1 h-px bg-groovetop-navy/10" aria-hidden="true" />
-        </motion.div>
-
         <div className="grid lg:grid-cols-[1fr_1fr] gap-16 lg:gap-24 items-start">
           <motion.div
             initial={shouldReduce ? false : { opacity: 0, y: 24 }}
@@ -41,7 +30,7 @@ export default function VisualDirection() {
               Nordic Warm
             </h2>
             <p className="text-base text-groovetop-navy/60 leading-relaxed max-w-md">
-              The color palette balances cold Nordic structure with warm domestic comfort — the emotional register of a trusted, calm, modern adoption experience.
+              The color palette balances cold Nordic structure with warm domestic comfort: the emotional register of a trusted, calm, modern adoption experience.
             </p>
             <p className="text-sm text-groovetop-navy/60 leading-relaxed max-w-md">
               Each color plays a specific semantic role, applied consistently through Groovetop DS v1 tokens rather than as one-off style decisions.

@@ -179,15 +179,13 @@ export default function DesignSystemProof() {
           transition={{ duration: 0.6, ease: EASE }}
           className="mb-10"
         >
-          <p className="text-[10px] font-bold tracking-[0.2em] uppercase text-groovetop-terracotta mb-4">
-            Design System Proof · The Proof Artifact
-          </p>
+          <span className="block w-10 h-1 rounded-full bg-groovetop-terracotta mb-5" aria-hidden="true" />
           <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-4">
             <h2 id="ds-heading" className="text-display-lg font-extrabold tracking-tight text-white">
               Semantic token flow
             </h2>
             <p className="text-sm text-white/55 max-w-md leading-relaxed lg:text-right">
-              The climax of the system story — every color, every surface, one resolved path from primitive to UI.
+              The climax of the system story. Every color, every surface, one resolved path from primitive to UI.
             </p>
           </div>
         </motion.div>
@@ -201,7 +199,7 @@ export default function DesignSystemProof() {
           className="mb-10"
         >
           <p className="text-sm text-white/65 leading-relaxed max-w-3xl">
-            Groovetop DS v1 applies strict variable-mapping logic: global primitives hold the raw visual values, while semantic tokens are named by <span className="font-semibold text-white">role destination</span> — <span className="font-mono text-[0.8em] text-white/85">color.background.hero</span>, <span className="font-mono text-[0.8em] text-white/85">color.cta.primary</span> — so the system reads as intent, not hex codes, and translates cleanly into handoff and front-end code.
+            Groovetop DS v1 applies strict variable-mapping logic: global primitives hold the raw visual values, while semantic tokens are named by <span className="font-semibold text-white">role destination</span>, like <span className="font-mono text-[0.8em] text-white/85">color.background.hero</span> and <span className="font-mono text-[0.8em] text-white/85">color.cta.primary</span>, so the system reads as intent, not hex codes, and translates cleanly into handoff and front-end code.
           </p>
         </motion.div>
 
@@ -307,7 +305,7 @@ export default function DesignSystemProof() {
 
         {/* Caption */}
         <p className="mt-10 text-center text-sm text-white/55">
-          Primitive → semantic → UI — 452 color bindings, 63 style applications, 6 screens, one path.
+          Primitive → semantic → UI. 452 color bindings, 63 style applications, 6 screens, one path.
         </p>
 
         {/* Supporting copy */}

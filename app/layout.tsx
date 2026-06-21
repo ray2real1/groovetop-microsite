@@ -10,11 +10,11 @@ const plusJakarta = Plus_Jakarta_Sans({
 });
 
 export const metadata: Metadata = {
-  title: "Groovetop Dog App — UX Case Study · Raymond Merrill II",
+  title: "Groovetop Dog App: UX Case Study · Raymond Merrill II",
   description:
-    "An award-recognized WGU UX prototype refined into Groovetop DS v1 — a documented design system and scalable mobile app concept study by Raymond Merrill II.",
+    "An award-recognized WGU UX prototype refined into Groovetop DS v1, a documented design system and scalable mobile app concept study by Raymond Merrill II.",
   openGraph: {
-    title: "Groovetop Dog App — UX Case Study",
+    title: "Groovetop Dog App: UX Case Study",
     description:
       "Mobile dog adoption experience transformed from an academic prototype into a structured design system with 68 tokens, 5 component sets, and 452 token bindings.",
     type: "website",

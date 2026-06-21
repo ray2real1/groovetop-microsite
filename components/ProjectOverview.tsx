@@ -4,7 +4,7 @@ import { motion, useReducedMotion } from "framer-motion";
 import { EASE } from "@/lib/motion";
 
 const META = [
-  { label: "Role",    value: "UX Designer · Visual Designer · Design System Creator" },
+  { label: "Role",    value: "UX Designer, Visual Designer, Design System Creator" },
   { label: "Context", value: "WGU UX Design academic project" },
   { label: "Scope",   value: "Mobile prototype + post-award design system refinement" },
   { label: "Status",  value: "Portfolio case study / not a live client product" },
@@ -40,13 +40,13 @@ export default function ProjectOverview() {
               From academic prototype<br />to documented design system
             </h2>
             <p className="text-base text-groovetop-navy/75 leading-relaxed max-w-xl">
-              Groovetop began as a WGU UX Design mobile app assignment for a dog adoption experience. After receiving a WGU Excellence Award, the project was refined into Groovetop DS v1 — a documented system with semantic tokens, typography styles, reusable component sets, editable properties, and token-connected screens.
+              Groovetop began as a WGU UX Design mobile app assignment for a dog adoption experience. After receiving a WGU Excellence Award, the project was refined into Groovetop DS v1, a documented system with semantic tokens, typography styles, reusable component sets, editable properties, and token-connected screens.
             </p>
             <p className="text-sm text-groovetop-navy/75 leading-relaxed max-w-xl">
-              The design system was extracted directly from the existing prototype screens. No new visual language was introduced — only structure, repeatability, and handoff clarity.
+              The design system was extracted directly from the existing prototype screens. No new visual language was introduced, only structure, repeatability, and handoff clarity.
             </p>
             <p className="text-base font-medium text-groovetop-navy/80 leading-relaxed max-w-xl rounded-xl bg-groovetop-oat border border-groovetop-navy/8 px-5 py-4">
-              Worth a recruiter&rsquo;s attention because it shows the move from attractive screens to a documented, reusable system — without overstating the original academic scope.
+              The project shows the move from attractive screens to a documented, reusable design system, without overstating the original academic scope.
             </p>
           </motion.div>
 

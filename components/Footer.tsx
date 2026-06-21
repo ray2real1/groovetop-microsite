@@ -6,7 +6,7 @@ export default function Footer() {
     >
       <div className="max-w-content mx-auto px-6 lg:px-10 flex flex-col sm:flex-row items-center justify-between gap-4">
         <p className="text-xs text-groovetop-navy/55 font-medium">
-          Raymond Merrill II · Da&rsquo;Bombay UX Design · Groovetop DS v1
+          Raymond Merrill II, Da&rsquo;Bombay UX Design · Groovetop DS v1
         </p>
         <a
           href="mailto:ray2real1@gmail.com"

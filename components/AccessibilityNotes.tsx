@@ -8,7 +8,7 @@ const CONSIDERATIONS = [
   { title: "Readable card structure", note: "Card-based layout groups related information and reduces the cognitive overhead of dense list views.", status: "implemented" },
   { title: "Large mobile tap targets", note: "Primary CTAs and nav items are sized for comfortable thumb reach on 390px mobile viewports.", status: "implemented" },
   { title: "Persistent bottom navigation", note: "Key destinations remain reachable at all times without scroll or back-navigation.", status: "implemented" },
-  { title: "Status badges — color + label", note: "Availability states are never communicated by color alone. Text labels accompany every color indicator.", status: "implemented" },
+  { title: "Status badges, color and label", note: "Availability states are never communicated by color alone. Text labels accompany every color indicator.", status: "implemented" },
   { title: "Restrained motion", note: "Transitions are subtle and purposeful. No autoplay, no scroll-jacking, no looping animations.", status: "implemented" },
   { title: "Color contrast review", note: "A full WCAG contrast audit has not been formally completed. This is an identified future priority.", status: "future" },
   { title: "Screen-reader annotation", note: "Component annotations for screen-reader behavior and ARIA roles are planned but not yet completed.", status: "future" },
@@ -32,10 +32,6 @@ export default function AccessibilityNotes() {
           transition={{ duration: 0.55, ease: EASE }}
           className="mb-10"
         >
-          <div className="flex items-center gap-3 mb-6">
-            <p className="text-[10px] font-bold tracking-[0.2em] uppercase text-groovetop-terracotta">Accessibility + Usability</p>
-            <span className="flex-1 h-px bg-groovetop-navy/10" aria-hidden="true" />
-          </div>
           <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-4">
             <h2 id="a11y-heading" className="text-display-md font-extrabold tracking-tight text-groovetop-navy">
               Practical considerations, honestly stated

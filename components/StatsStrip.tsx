@@ -90,15 +90,13 @@ export default function StatsStrip() {
           transition={{ duration: 0.6, ease: EASE }}
           className="mb-12"
         >
-          <p className="text-[10px] font-bold tracking-[0.2em] uppercase text-groovetop-terracotta mb-4">
-            Design System · Proof Wall
-          </p>
+          <span className="block w-10 h-1 rounded-full bg-groovetop-terracotta mb-5" aria-hidden="true" />
           <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-4">
             <h2 id="stats-heading" className="text-display-md font-extrabold tracking-tight text-white">
               The system, by the numbers
             </h2>
             <p className="text-sm text-white/55 max-w-xs leading-relaxed lg:text-right">
-              Not a number strip — an evidence wall. Every tile is a repeatable structure, not just a count.
+              Not a number strip, but an evidence wall. Every tile is a repeatable structure, not just a count.
             </p>
           </div>
         </motion.div>
@@ -121,17 +119,17 @@ export default function StatsStrip() {
           </div>
         </div>
 
-        <motion.blockquote
+        <motion.div
           initial={shouldReduce ? false : { opacity: 0 }}
           whileInView={{ opacity: 1 }}
           viewport={{ once: true, margin: "-60px" }}
           transition={{ duration: 0.7, delay: 0.2, ease: EASE }}
-          className="mt-14 pt-10 border-t border-white/10 text-center"
+          className="mt-14 pt-10 border-t border-white/10"
         >
-          <p className="text-xl lg:text-2xl font-semibold italic text-white/75 max-w-2xl mx-auto leading-snug text-balance">
-            &ldquo;The value is not the count alone — it is the repeatable structure behind the UI.&rdquo;
+          <p className="text-base lg:text-lg font-medium text-white/70 max-w-2xl leading-relaxed">
+            The value is not the count alone. It is the repeatable structure behind the UI: the same tokens, styles, and components resolving the same way across every screen.
           </p>
-        </motion.blockquote>
+        </motion.div>
       </div>
     </section>
   );
