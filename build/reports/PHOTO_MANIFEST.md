@@ -20,7 +20,7 @@ Status: **LOCKED — never replaced.**
 | Shot | Discipline | File | Status |
 |---|---|---|---|
 | BISCUIT_MASTER | neutral casting portrait | biscuit-master.jpg | **LOCKED** |
-| P2 — Not Inventory | editorial character portraiture | biscuit-p2-portrait.jpg | brief issued |
+| P2 — Not Inventory | editorial character portraiture | biscuit-p2-portrait.jpg | **ACCEPT** (gated + composited) |
 | P1 — The First Look | macro cinematic | biscuit-p1-eye.jpg | pending |
 | P11 — The Decision | low-key close, legible eye | biscuit-p11-eyes.jpg | pending |
 | P13 — At Rest | floor-level, even/high/motionless light | biscuit-p13-rest.jpg | pending |

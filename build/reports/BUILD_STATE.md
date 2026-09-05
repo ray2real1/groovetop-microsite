@@ -24,7 +24,7 @@ Award: WGU Excellence Award · Prototyping & Iterating II, Task 2 · May 2026 ·
 | Page | Title | Type | Status |
 |---|---|---|---|
 | P1 | The First Look | campaign photo + masthead | BLOCKED — image egress |
-| P2 | Not Inventory | campaign photo + device | BLOCKED — image egress |
+| P2 | Not Inventory | campaign photo + argument | **ACCEPT** (Biscuit gated vs master; composited; rendered) |
 | P3 | Every Answer Ships | evidence + editorial | **ACCEPT** |
 | P4 | The Filters Are the Persona | hybrid | **ACCEPT** |
 | P5 | The Page Is the Card | campaign photo | BLOCKED — image egress |
