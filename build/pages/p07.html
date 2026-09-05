@@ -1,0 +1,105 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8">
+<link rel="stylesheet" href="../tokens.css">
+<style>
+  /* P7 — MATERIALIZATION · product construction as storytelling.
+     The Pet Profile mid-build: resolved above, wireframe below, the CTA already
+     bound to color/brand/primary. Real component sets, true dependency threads.
+     Graphite build world. No fake blueprint, no glass explosion. */
+  .page{background:radial-gradient(150% 130% at 30% 0%, #232B33 0%, #171C22 55%, #0D1116 100%);color:#DfE4EA;color:#DFE4EA}
+  .grain{position:absolute;inset:0;opacity:.5;mix-blend-mode:overlay;pointer-events:none;
+    background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='150' height='150'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2'/></filter><rect width='150' height='150' filter='url(%23n)' opacity='0.04'/></svg>")}
+
+  .folio.tl{top:54px;left:72px;color:#79828E}
+  .folio.br{bottom:34px;left:72px;color:#79828E}
+
+  /* device — real screen, resolved on top, dissolving to wireframe below */
+  .dev{position:absolute;left:132px;top:120px;width:360px;height:780px;border-radius:42px;overflow:hidden;
+    background:#0C0F13;box-shadow:0 60px 120px -44px rgba(0,0,0,.6),0 14px 40px -14px rgba(0,0,0,.5)}
+  .dev img{position:absolute;left:0;top:0;width:360px;display:block}
+  /* the wireframe zone masks the lower ~46% of the resolved screen */
+  .wire{position:absolute;left:0;right:0;bottom:0;height:360px;
+    background:linear-gradient(180deg, rgba(14,18,23,0) 0%, rgba(14,18,23,.86) 34px, rgba(14,18,23,.95) 100%)}
+  .seam{position:absolute;left:0;right:0;top:0;height:2px;background:linear-gradient(90deg,transparent,rgba(230,201,171,.6),transparent)}
+  .wf{position:absolute;border:1.5px dashed rgba(150,163,178,.5);border-radius:12px}
+  .wf .t{position:absolute;left:12px;top:-9px;background:#12171D;padding:0 8px;font-family:var(--tech);
+    font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:#93A0AE;white-space:nowrap}
+  .wf.bound{border:1.5px solid var(--camp-terra);background:rgba(185,84,56,.16)}
+  .wf.bound .t{color:var(--camp-champ);background:#12171D}
+  .wf.bound .cta{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
+    font-family:var(--sans);font-weight:700;font-size:14px;color:#F3E4D6}
+
+  /* header */
+  .head{position:absolute;top:118px;left:600px;width:520px}
+  .eyebrow{font-family:var(--tech);font-weight:500;letter-spacing:.28em;text-transform:uppercase;font-size:12px;color:var(--camp-champ)}
+  .ttl{font-family:var(--serif);font-weight:400;font-size:40px;line-height:1.06;letter-spacing:-0.015em;margin-top:18px;color:#F1F4F7;max-width:15ch}
+  .sub{font-family:var(--serif);font-style:italic;font-size:16.5px;color:#9DA8B4;margin-top:18px;max-width:32ch;line-height:1.45}
+
+  /* component library — the parts being assembled */
+  .lib{position:absolute;left:600px;top:352px;width:520px}
+  .libk{font-family:var(--tech);font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:#78838F;margin-bottom:16px}
+  .chip{display:inline-flex;align-items:center;gap:10px;margin:0 10px 12px 0;padding:11px 16px;border-radius:12px;
+    background:rgba(255,255,255,.035);border:1px solid rgba(255,255,255,.09)}
+  .chip .nm{font-family:var(--tech);font-weight:500;font-size:14px;color:#E2E7EC}
+  .chip .v{font-family:var(--tech);font-size:10.5px;color:#7E8A97}
+  .chip.prim{border-color:rgba(185,84,56,.5);background:rgba(185,84,56,.12)}
+  .chip.prim .nm{color:#F0DCCE}
+
+  .note{position:absolute;left:600px;bottom:120px;width:500px;font-family:var(--sans);font-size:13px;
+    color:#8A95A2;line-height:1.6}
+  .note b{color:var(--camp-champ);font-weight:600}
+
+  svg.dep{position:absolute;inset:0;width:100%;height:100%;overflow:visible;pointer-events:none}
+  .dep path{fill:none;stroke:rgba(230,201,171,.34);stroke-width:1.4;stroke-dasharray:1 8;stroke-linecap:round}
+  .dep circle{fill:var(--camp-champ)}
+</style></head>
+<body>
+<div class="page">
+  <div class="grain"></div>
+  <div class="folio tl">Groovetop · Case Study</div>
+  <div class="folio br">07 / 13 — Construction</div>
+
+  <div class="dev">
+    <img src="../assets/screens/pet-profile.png" alt="Groovetop Pet Profile, mid-construction">
+    <div class="wire">
+      <div class="seam"></div>
+      <!-- wireframe regions over the lower, unresolved half -->
+      <div class="wf" style="left:24px;top:70px;width:312px;height:52px"><span class="t">Requirements</span></div>
+      <div class="wf bound" style="left:28px;top:150px;width:304px;height:52px"><span class="t">Button / Primary · color/brand/primary</span><div class="cta">Schedule a Visit</div></div>
+      <div class="wf" style="left:28px;top:222px;width:304px;height:46px"><span class="t">Button / Ghost</span></div>
+      <div class="wf" style="left:20px;top:292px;width:320px;height:52px"><span class="t">Bottom Nav</span></div>
+    </div>
+  </div>
+
+  <div class="head">
+    <div class="eyebrow">Materialization</div>
+    <h1 class="ttl">A screen is the last thing to appear.</h1>
+    <div class="sub">Underneath, it's still parts — components, states, and one token that decides what “act” looks like.</div>
+  </div>
+
+  <div class="lib">
+    <div class="libk">Assembled from five component sets</div>
+    <div>
+      <div class="chip"><span class="nm">Search Bar</span><span class="v">· Default</span></div>
+      <div class="chip"><span class="nm">Badge</span><span class="v">· Species / Status</span></div>
+      <div class="chip"><span class="nm">Pet Card</span><span class="v">· Browse / Saved</span></div>
+      <div class="chip prim"><span class="nm">Button</span><span class="v">· Primary / Ghost</span></div>
+      <div class="chip"><span class="nm">Bottom Nav</span><span class="v">· Active</span></div>
+    </div>
+  </div>
+
+  <div class="note">
+    Dependency is real, not decorative: the <b>Button</b> set resolves the “Schedule a Visit”
+    action, bound to the single <b>color/brand/primary</b> token — the one terracotta the system
+    lets mean <em>act</em>.
+  </div>
+
+  <svg class="dep" viewBox="0 0 1440 960" preserveAspectRatio="none">
+    <!-- Button chip -> bound CTA on device -->
+    <path d="M 600 430 C 540 470, 470 720, 372 800"/>
+    <circle cx="372" cy="800" r="4"/>
+    <!-- Badge chip -> status region (upper resolved half) -->
+    <path d="M 600 402 C 540 430, 480 470, 372 500"/>
+    <circle cx="372" cy="500" r="4"/>
+  </svg>
+</div>
+</body></html>

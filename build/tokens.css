@@ -1,0 +1,73 @@
+/* ==========================================================================
+   GROOVETOP — FINAL PDF BUILD · SHARED TOKENS
+   Canonical canvas: 1440 × 960 (3:2). Captured @2x = 2880 × 1920.
+   Systematic code, page-specific composition. Art direction outranks DRY.
+   --------------------------------------------------------------------------
+   TWO PALETTE JURISDICTIONS (evidence/campaign firewall):
+   --product-*   = authentic Nordic Warm / DS v1. Used ONLY inside real UI.
+   --camp-*      = authored campaign environment. Backgrounds / fields / type.
+   ========================================================================== */
+
+/* ---- Type ---------------------------------------------------------------- */
+@font-face{font-family:'Jakarta';src:url('../assets/fonts/jakarta-400.woff2') format('woff2');font-weight:400;font-display:block}
+@font-face{font-family:'Jakarta';src:url('../assets/fonts/jakarta-500.woff2') format('woff2');font-weight:500;font-display:block}
+@font-face{font-family:'Jakarta';src:url('../assets/fonts/jakarta-600.woff2') format('woff2');font-weight:600;font-display:block}
+@font-face{font-family:'Jakarta';src:url('../assets/fonts/jakarta-700.woff2') format('woff2');font-weight:700;font-display:block}
+@font-face{font-family:'Jakarta';src:url('../assets/fonts/jakarta-800.woff2') format('woff2');font-weight:800;font-display:block}
+@font-face{font-family:'Fraunces';src:url('../assets/fonts/fraunces-400.woff2') format('woff2');font-weight:400;font-display:block}
+@font-face{font-family:'Fraunces';src:url('../assets/fonts/fraunces-500.woff2') format('woff2');font-weight:500;font-display:block}
+@font-face{font-family:'Fraunces';src:url('../assets/fonts/fraunces-600.woff2') format('woff2');font-weight:600;font-display:block}
+@font-face{font-family:'Fraunces';src:url('../assets/fonts/fraunces-400-italic.woff2') format('woff2');font-weight:400;font-style:italic;font-display:block}
+@font-face{font-family:'SpaceG';src:url('../assets/fonts/space-500.woff2') format('woff2');font-weight:500;font-display:block}
+@font-face{font-family:'SpaceG';src:url('../assets/fonts/space-700.woff2') format('woff2');font-weight:700;font-display:block}
+
+:root{
+  /* Authentic product palette — Nordic Warm / DS v1 */
+  --product-navy:#1B2A4A;
+  --product-terra:#C96F53;
+  --product-oat:#FAF7F1;
+  --product-white:#FFFFFF;
+  --product-green:#2EAD8C;
+  --product-blue:#618FED;
+
+  /* Campaign environment palette (presentation only) */
+  --camp-abyss:#0C1B32;      /* deep cinematic ground */
+  --camp-navy:#12294A;       /* raised campaign navy */
+  --camp-terra:#B95438;      /* campaign terracotta (action rhetoric) */
+  --camp-champ:#E6C9AB;      /* champagne */
+  --camp-ivory:#F3ECE1;      /* warm paper field */
+  --camp-oat:#FAF7F1;
+  --camp-ink:#141A24;        /* graphite */
+  --camp-fog:#8A93A3;
+
+  --canvas-w:1440px;
+  --canvas-h:960px;
+
+  --serif:'Fraunces',Georgia,serif;
+  --sans:'Jakarta','Plus Jakarta Sans',system-ui,sans-serif;
+  --tech:'SpaceG','Jakarta',system-ui,sans-serif;
+}
+
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html,body{width:var(--canvas-w);height:var(--canvas-h)}
+body{font-family:var(--sans);-webkit-font-smoothing:antialiased;text-rendering:geometricPrecision;overflow:hidden}
+
+/* Every page mounts one .page as the deterministic capture frame */
+.page{
+  position:relative;
+  width:var(--canvas-w);
+  height:var(--canvas-h);
+  overflow:hidden;
+}
+
+/* Shared editorial atoms (opt-in; not a layout template) */
+.kicker{font-family:var(--tech);font-weight:500;text-transform:uppercase;letter-spacing:.26em;font-size:12px}
+.hair{background:currentColor;opacity:.16}
+.folio{position:absolute;font-family:var(--tech);font-weight:500;letter-spacing:.24em;font-size:11px;text-transform:uppercase}
+.evidence-tag{font-family:var(--tech);font-weight:500;font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;display:inline-flex;align-items:center;gap:6px}
+.evidence-tag::before{content:"";width:5px;height:5px;border-radius:1px;background:var(--product-green);display:inline-block}
+
+/* Authentic-UI device frame — real screen PNGs, never recolored */
+.device{position:absolute;border-radius:38px;overflow:hidden;background:#000;
+  box-shadow:0 40px 90px -30px rgba(6,14,28,.55),0 8px 24px -8px rgba(6,14,28,.4)}
+.device img{display:block;width:100%;height:100%;object-fit:cover}
