@@ -1,0 +1,86 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8">
+<link rel="stylesheet" href="../tokens.css">
+<style>
+  /* P10 — ANATOMY · the five true structural layers of the Pet Card.
+     ACTION · STATE · IDENTITY · IMAGE · FRAME, exploded as digital planes with
+     air and contact shadow. Authentic tokens + strings. No glass, no chrome. */
+  .page{background:linear-gradient(150deg,#ECE7DD 0%,#E4DED2 55%,#D9D2C4 100%);color:var(--product-navy)}
+  .grain{position:absolute;inset:0;opacity:.5;mix-blend-mode:multiply;pointer-events:none;
+    background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='140' height='140'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/><feColorMatrix type='saturate' values='0'/></filter><rect width='140' height='140' filter='url(%23n)' opacity='0.03'/></svg>")}
+
+  .folio.tl{top:54px;left:72px;color:#8F8064}
+  .folio.br{bottom:34px;left:72px;color:#8F8064}
+
+  .head{position:absolute;top:118px;left:72px;width:430px;z-index:5}
+  .eyebrow{font-family:var(--tech);font-weight:500;letter-spacing:.28em;text-transform:uppercase;
+    font-size:12px;color:var(--camp-terra)}
+  .ttl{font-family:var(--serif);font-weight:400;font-size:52px;line-height:1;letter-spacing:-0.02em;
+    margin-top:16px;color:#20304F}
+  .sub{font-family:var(--serif);font-style:italic;font-size:17px;color:#5F5849;margin-top:18px;
+    max-width:26ch;line-height:1.45}
+
+  .index{position:absolute;left:74px;top:360px;width:392px}
+  .ix{display:grid;grid-template-columns:74px 1fr;align-items:baseline;padding:13px 0;
+    border-top:1px solid rgba(32,48,79,.14)}
+  .ix:last-child{border-bottom:1px solid rgba(32,48,79,.14)}
+  .ix .l{font-family:var(--tech);font-weight:700;font-size:15px;letter-spacing:.12em;color:var(--product-navy)}
+  .ix .r .tk{font-family:var(--tech);font-size:12.5px;color:#7A6E5A}
+  .ix .r .tk b{color:var(--camp-terra);font-weight:500}
+  .ix.on .l{color:var(--camp-terra)}
+
+  /* the exploded stack — low-rake perspective, generous air between planes */
+  .scene{position:absolute;right:206px;top:206px;width:620px;height:720px;perspective:2000px}
+  .stack{position:absolute;inset:0;transform-style:preserve-3d;
+    transform:rotateX(54deg) rotateZ(-38deg)}
+  .plane{position:absolute;left:150px;top:250px;width:328px;height:200px;border-radius:26px;
+    transform-style:preserve-3d;box-shadow:0 26px 34px -16px rgba(40,30,20,.3)}
+
+  /* layer surfaces (authentic Nordic Warm) */
+  .frame{background:var(--product-white)}
+  .image{background:var(--product-terra)}
+  .image .badge{position:absolute;right:20px;bottom:18px;background:var(--product-navy);color:#fff;
+    font-family:var(--sans);font-weight:700;font-size:14px;letter-spacing:.06em;padding:8px 16px;border-radius:12px}
+  .state{background:#F4F6FA;display:flex;align-items:center;gap:12px;padding:0 26px}
+  .state .chip{font-family:var(--sans);font-weight:600;font-size:15px;padding:9px 16px;border-radius:12px;
+    background:#EDF0F5;color:#3A4864}
+  .state .avail{background:rgba(46,173,140,.14);color:#1f7d67}
+  .identity{background:var(--product-white);padding:30px 30px}
+  .identity .nm{font-family:var(--sans);font-weight:800;font-size:30px;color:var(--product-navy);letter-spacing:-0.01em}
+  .identity .br{font-family:var(--sans);font-weight:500;font-size:17px;color:#5A6symbol}
+  .identity .br{color:#5A6478;margin-top:2px}
+  .action{background:var(--product-navy);display:flex;align-items:center;justify-content:center}
+  .action .cta{font-family:var(--sans);font-weight:700;font-size:20px;color:#fff}
+</style></head>
+<body>
+<div class="page">
+  <div class="grain"></div>
+  <div class="folio tl">Groovetop · Case Study</div>
+  <div class="folio br">10 / 13 — Anatomy</div>
+
+  <div class="head">
+    <div class="eyebrow">Anatomy</div>
+    <h1 class="ttl">Five layers,<br>one card.</h1>
+    <div class="sub">The Pet Card isn't a picture with text on it. It's a stack of decisions, each one owned by a token.</div>
+  </div>
+
+  <div class="index">
+    <div class="ix on"><div class="l">ACTION</div><div class="r"><div class="tk">Button · Primary · <b>color/brand/primary</b></div></div></div>
+    <div class="ix"><div class="l">STATE</div><div class="r"><div class="tk">Badge · <b>color/status/success-bg</b></div></div></div>
+    <div class="ix"><div class="l">IDENTITY</div><div class="r"><div class="tk">text · Display → Caption</div></div></div>
+    <div class="ix"><div class="l">IMAGE</div><div class="r"><div class="tk">container · <b>radius/xl</b></div></div></div>
+    <div class="ix"><div class="l">FRAME</div><div class="r"><div class="tk">Pet Card · surface + radius</div></div></div>
+  </div>
+
+  <div class="scene"><div class="stack">
+    <div class="plane frame" style="transform:translateZ(0px)"></div>
+    <div class="plane image" style="transform:translateZ(104px)"><div class="badge">BISCUIT</div></div>
+    <div class="plane state" style="transform:translateZ(312px)">
+      <div class="chip avail">Available</div><div class="chip">3 years</div><div class="chip">Vaccinated</div>
+    </div>
+    <div class="plane identity" style="transform:translateZ(208px)">
+      <div class="nm">Biscuit</div><div class="br">Golden Retriever · Atlanta, GA</div>
+    </div>
+    <div class="plane action" style="transform:translateZ(416px)"><div class="cta">View Profile</div></div>
+  </div></div>
+</div>
+</body></html>
